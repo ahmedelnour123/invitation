@@ -1,0 +1,455 @@
+/* ============================================================
+   Wedding invitation — styles (bakhoor smoke design)
+   Deep burgundy night, gold text, soft rising smoke, mabkhara,
+   Sudanese sawtooth bands.
+   ============================================================ */
+
+:root {
+  /* palette */
+  --burgundy-deep: #5C1620;
+  --gold: #B88A3E;
+  --gold-soft: #D9BE86;
+  --sand: #E9DCC4;
+
+  /* fonts */
+  --font-script: "Aref Ruqaa", "Amiri", serif;
+  --font-body: "Amiri", "Times New Roman", serif;
+  --font-ui: "Reem Kufi", "Amiri", sans-serif;
+
+  /* patterns */
+  --lattice: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cpath d='M22 2 L42 22 L22 42 L2 22Z' fill='none' stroke='%23D9BE86' stroke-opacity='.16' stroke-width='1'/%3E%3Ccircle cx='22' cy='22' r='1.6' fill='%23D9BE86' fill-opacity='.22'/%3E%3C/svg%3E");
+  --band: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='18'%3E%3Crect width='24' height='18' fill='%235C1620'/%3E%3Cpath d='M0 18 L6 6 L12 18Z' fill='%23B88A3E'/%3E%3Cpath d='M12 18 L18 6 L24 18Z' fill='%23E9DCC4'/%3E%3Cpath d='M18 0.8 L20 3 L18 5.2 L16 3Z' fill='%23D9BE86'/%3E%3Cpath d='M6 0.8 L8 3 L6 5.2 L4 3Z' fill='%23E9DCC4'/%3E%3C/svg%3E");
+  --chain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='14'%3E%3Cpath d='M0 7 H5 M19 7 H24' stroke='%23B88A3E' stroke-width='1'/%3E%3Cpath d='M12 1.5 L18 7 L12 12.5 L6 7Z' fill='none' stroke='%23B88A3E' stroke-width='1.1'/%3E%3Ccircle cx='12' cy='7' r='1.4' fill='%237A1F2B'/%3E%3C/svg%3E");
+
+  /* colours used across the page */
+  --page-bg: #12060A;
+  --page-img: radial-gradient(ellipse at 50% 0%, #4A1A22 0%, #1E0A0E 60%, #12060A 100%);
+  --paper-bg: #1D0A0E;
+  --paper-img: var(--lattice), linear-gradient(180deg, #2A0F14 0%, #1C0A0D 45%, #241014 100%);
+  --text: #EFE2CE;
+  --text-soft: #C9B59D;
+  --title: var(--gold-soft);
+  --accent: #CFA557;
+  --card-bg: rgba(255,240,220,.045);
+  --card-line: rgba(217,190,134,.28);
+  --btn-bg: var(--gold-soft);
+  --btn-text: #2A0F14;
+  --btn-hover: #E8CF9A;
+  --ghost-text: var(--gold-soft);
+  --ghost-hover: rgba(217,190,134,.1);
+  --shadow: rgba(0,0,0,.6);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.9;
+  color: var(--text);
+  background-color: var(--page-bg);
+  background-image: var(--page-img);
+  text-align: center;
+}
+
+.js body.is-locked { overflow: hidden; height: 100vh; }
+
+h1, h2, h3, p, ul { margin: 0; }
+p, li { text-wrap: pretty; }
+.verse__text, .intro-text p, .hosts__line { text-wrap: balance; }
+ul { padding: 0; list-style: none; }
+a { color: inherit; }
+button { font: inherit; }
+
+/* ============================================================
+   Intro (opening screen) — frame; the bakhoor smoke opening is
+   further down. --u = 1% of the screen width (capped) so it
+   scales on every phone.
+   ============================================================ */
+.intro {
+  --u: min(1vw, 4.4px);
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  overflow: hidden;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  background: var(--burgundy-deep);
+  transition: opacity .9s ease, visibility 0s linear .9s;
+}
+.intro:focus { outline: none; }
+.intro:focus-visible { outline: 2px solid var(--gold-soft); outline-offset: -6px; }
+.intro.is-gone { opacity: 0; visibility: hidden; }
+html:not(.js) .intro { display: none; }
+
+.intro__hint {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 9vh;
+  font-size: calc(var(--u) * 4.4);
+  color: var(--hint, var(--sand));
+  animation: pulse 2.4s ease-in-out infinite;
+}
+.intro.is-playing .intro__hint { opacity: 0; animation: none; transition: opacity .3s; }
+
+@keyframes pulse {
+  0%, 100% { opacity: .55; transform: translateY(0); }
+  50%      { opacity: 1;   transform: translateY(-3px); }
+}
+
+/* ============================================================
+   Invitation page
+   ============================================================ */
+.paper {
+  position: relative;
+  max-width: 560px;
+  margin: 0 auto;
+  overflow: hidden;
+  background-color: var(--paper-bg);
+  background-image: var(--paper-img);
+  box-shadow: 0 0 60px rgba(0,0,0,.25);
+}
+@media (min-width: 600px) {
+  .page { padding: 40px 16px; }
+  .paper { border-radius: 4px; }
+}
+
+.band { height: 18px; background: var(--band) repeat-x; }
+.band--bottom { transform: scaleY(-1); }
+
+.section { position: relative; padding: 48px 24px; }
+
+.divider {
+  width: 62%;
+  height: 14px;
+  margin: 0 auto;
+  background: var(--chain) center / auto 14px repeat-x;
+  opacity: .85;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--accent);
+  line-height: 1.6;
+}
+.label::before,
+.label::after {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  opacity: .6;
+}
+
+/* ---------- Hero ---------- */
+.hero { padding-top: 64px; padding-bottom: 56px; }
+.hero__inner { position: relative; z-index: 1; }
+
+.basmala { font-size: 1.15rem; color: var(--text-soft); }
+.kicker { margin-top: 6px; font-family: var(--font-ui); font-size: 1rem; color: var(--accent); }
+
+.couple {
+  margin: 22px 0 20px;
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  font-weight: 400;
+}
+.couple__person { display: grid; justify-items: center; }
+.couple__title { font-family: var(--font-ui); font-size: .95rem; color: var(--accent); line-height: 1.4; }
+.couple__title:empty { display: none; }
+.couple__name {
+  font-family: var(--font-script);
+  font-weight: 700;
+  font-size: clamp(3rem, 15vw, 4.2rem);
+  line-height: 1.3;
+  color: var(--title);
+}
+.couple__full {
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+.couple__and { color: var(--accent); width: 64px; margin: 6px 0; }
+.couple__and svg { display: block; width: 100%; height: auto; }
+
+.hero__date { display: grid; font-family: var(--font-ui); font-size: 1.15rem; color: var(--text); line-height: 1.7; }
+.hero__hijri { font-size: .95rem; color: var(--text-soft); }
+
+/* ---------- Verse ---------- */
+.verse__text { font-size: 1.35rem; line-height: 2.1; color: var(--title); }
+.verse__ref { margin-top: 4px; font-family: var(--font-ui); font-size: .85rem; color: var(--accent); }
+.intro-text { margin-top: 26px; display: grid; gap: 10px; color: var(--text-soft); font-size: 1.08rem; }
+
+/* ---------- Hosts ---------- */
+.hosts { padding-top: 8px; }
+.hosts__list { margin: 18px 0; display: grid; gap: 4px; }
+.hosts__family { display: grid; justify-items: center; }
+.hosts__family + .hosts__family::before {
+  content: "&";
+  display: block;
+  margin: 6px 0;
+  font-size: 1.1rem;
+  color: var(--accent);
+  line-height: 1.6;
+}
+.hosts__father,
+.hosts__mother { font-weight: 700; font-size: 1.2rem; color: var(--text); line-height: 1.6; }
+.hosts__and { font-size: .95rem; color: var(--accent); line-height: 1.4; }
+.hosts__line { color: var(--text-soft); font-size: 1.08rem; white-space: pre-line; }
+
+/* ---------- Countdown ---------- */
+.countdown__sub { color: var(--text-soft); font-size: 1rem; margin-top: 2px; }
+.countdown__grid {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.cd {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  padding: 18px 4px 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-line);
+  border-radius: 999px 999px 8px 8px;
+}
+.cd__num {
+  font-weight: 700;
+  font-size: clamp(1.6rem, 7vw, 2.1rem);
+  line-height: 1.2;
+  color: var(--title);
+  font-variant-numeric: tabular-nums;
+}
+.cd__unit { font-family: var(--font-ui); font-size: .85rem; color: var(--text-soft); }
+.countdown__done { margin-top: 18px; font-size: 1.15rem; color: var(--title); }
+
+/* ---------- Details ---------- */
+.details { display: grid; gap: 22px; padding-top: 8px; }
+.card {
+  position: relative;
+  padding: 28px 20px 24px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-line);
+  border-radius: 6px;
+  box-shadow: 0 10px 24px -14px var(--shadow);
+}
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid var(--card-line);
+  border-radius: 3px;
+  opacity: .7;
+  pointer-events: none;
+}
+.card__icon { width: 30px; height: 30px; color: var(--accent); }
+.card__title { margin-top: 4px; font-family: var(--font-ui); font-weight: 500; font-size: 1rem; color: var(--accent); }
+.card__main { margin-top: 6px; font-weight: 700; font-size: 1.3rem; color: var(--title); line-height: 1.6; }
+.card__meta { color: var(--text-soft); font-size: 1.02rem; line-height: 1.7; }
+.card__meta:empty { display: none; }
+.card__actions {
+  position: relative;
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 20px;
+  border: 1px solid var(--btn-bg);
+  border-radius: 999px;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  font-family: var(--font-ui);
+  font-size: .95rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .2s, color .2s, transform .15s;
+}
+.btn:hover { background: var(--btn-hover); }
+.btn:active { transform: scale(.97); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.btn--ghost { background: transparent; color: var(--ghost-text); }
+.btn--ghost:hover { background: var(--ghost-hover); }
+
+/* ---------- Notes ---------- */
+.notes { padding-top: 16px; }
+.note {
+  position: relative;
+  padding: 34px 22px 22px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-line);
+  border-radius: 6px;
+  box-shadow: 0 12px 24px -16px var(--shadow);
+}
+.note__list {
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+  text-align: start;
+  font-size: 1.02rem;
+}
+.note__list li { position: relative; padding-inline-start: 22px; }
+.note__list li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 2px;
+  top: .8em;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+/* ---------- Closing ---------- */
+.closing { padding-top: 56px; padding-bottom: 56px; }
+.closing__big {
+  font-family: var(--font-script);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 10vw, 3rem);
+  line-height: 1.4;
+  color: var(--title);
+}
+.closing__sub { margin-top: 4px; color: var(--text-soft); font-size: 1.1rem; }
+.closing__names { margin-top: 28px; font-family: var(--font-script); font-size: 1.6rem; color: var(--text); }
+.closing__names .amp { color: var(--accent); font-family: var(--font-body); font-size: 1.1rem; margin: 0 .45em; }
+.closing__date { font-family: var(--font-ui); font-size: .95rem; color: var(--accent); }
+
+/* ============================================================
+   Bakhoor smoke decorations (mabkhara, wisps, dark components)
+   ============================================================ */
+.couple__name,
+.closing__big,
+.verse__text { text-shadow: 0 0 22px rgba(217,190,134,.32); }
+
+.hero {
+  padding-top: 56px;
+  background: radial-gradient(ellipse at 50% 85%, rgba(122,31,43,.55) 0%, transparent 65%);
+}
+
+/* ---------- Mabkhara with rising smoke ---------- */
+.censer {
+  position: relative;
+  width: 64px;
+  margin: 30px auto 0;
+}
+.censer svg { display: block; width: 100%; height: auto; overflow: visible; }
+.censer .ember { filter: drop-shadow(0 0 8px #FF8A3D); animation: flicker 1.6s ease-in-out infinite alternate; }
+.wisp {
+  position: absolute;
+  left: 50%;
+  bottom: 44px;
+  z-index: -1;
+  width: 90px;
+  height: 90px;
+  margin-left: -45px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,236,220,.22) 0%, rgba(255,236,220,.08) 45%, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+  animation: wisp var(--dur) ease-out var(--delay) infinite;
+}
+@keyframes wisp {
+  0%   { opacity: 0; transform: translate(0, 0) scale(.4); }
+  20%  { opacity: .8; }
+  100% { opacity: 0; transform: translate(var(--dx), -340px) scale(2.6); }
+}
+@keyframes flicker { from { opacity: .75; } to { opacity: 1; } }
+
+/* ---------- Components on dark ---------- */
+.cd { box-shadow: inset 0 0 18px rgba(217,190,134,.06); }
+.card,
+.note { box-shadow: 0 14px 30px -18px var(--shadow), inset 0 1px 0 rgba(255,240,220,.06); }
+.note { padding-top: 26px; }
+
+/* ============================================================
+   Opening: bakhoor smoke
+   ============================================================ */
+.smk {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 85%, #5A1E26 0%, #2A0F14 60%, #160709 100%);
+}
+.smk-text {
+  position: absolute; top: 20vh; left: 0; right: 0;
+  display: grid; gap: calc(var(--u) * 1);
+  padding: 0 16px;
+  animation: smkIn 3s ease .3s both;
+}
+.smk-text small { font-size: calc(var(--u) * 4.4); color: var(--sand); }
+.smk-text b { font-family: var(--font-script); font-size: calc(var(--u) * 13); color: var(--gold-soft); line-height: 1.35; text-shadow: 0 0 calc(var(--u) * 5) rgba(217,190,134,.35); }
+.smk-text i { font-style: normal; font-family: var(--font-body); font-size: calc(var(--u) * 5.5); color: var(--gold); }
+@keyframes smkIn { from { opacity: 0; filter: blur(6px); } to { opacity: 1; filter: none; } }
+
+.puff {
+  position: absolute; left: 50%;
+  bottom: calc(12vh + var(--u) * 24);
+  width: calc(var(--u) * 26); height: calc(var(--u) * 26);
+  margin-left: calc(var(--u) * -13);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,236,220,.32) 0%, rgba(255,236,220,.12) 40%, transparent 70%);
+  opacity: 0;
+  animation: rise var(--dur) ease-out var(--delay) infinite;
+}
+@keyframes rise {
+  0%   { opacity: 0; transform: translate(0, 0) scale(.35); }
+  15%  { opacity: .9; }
+  100% { opacity: 0; transform: translate(calc(var(--dx) * var(--u)), -62vh) scale(2.8); }
+}
+
+.mabkhara { position: absolute; left: 50%; bottom: 12vh; width: calc(var(--u) * 30); transform: translateX(-50%); }
+.mabkhara svg { display: block; width: 100%; height: auto; overflow: visible; }
+.mabkhara .ember { filter: drop-shadow(0 0 calc(var(--u) * 2) #FF8A3D); animation: flicker 1.6s ease-in-out infinite alternate; }
+
+/* the smoke fills the screen, then clears into the dark page */
+.smk-fog {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 65%, rgba(236,222,206,.94) 0%, rgba(160,128,118,.92) 45%, rgba(42,18,24,.97) 100%);
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.intro.is-playing .smk-fog { opacity: 1; }
+.smk .intro__hint { bottom: 4.5vh; }
+
+/* ============================================================
+   Scroll reveal
+   ============================================================ */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+.js .reveal.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: .01ms !important;
+    transition-delay: 0s !important;
+  }
+  .js .reveal { opacity: 1; transform: none; }
+}
