@@ -1,0 +1,8 @@
+[
+  {"viewport": [1500, 2100]},
+  {"goto": "{TOOLS}/qr-card/card.html?qr=0", "wait": 3500, "shot": "qr-background.png"},
+  {"goto": "{TOOLS}/qr-card/card.html?src={PROJECT}/qr/qr-code.svg", "wait": 3500, "shot": "qr-card.png"},
+  {"viewport": [1200, 1200]},
+  {"transparent": true},
+  {"goto": "{TOOLS}/qr-card/qr-only.html?src={PROJECT}/qr/qr-code.svg", "wait": 1500, "shot": "qr-code.png"}
+]

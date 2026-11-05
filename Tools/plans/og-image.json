@@ -1,0 +1,4 @@
+[
+  {"viewport": [1200, 630]},
+  {"goto": "{TOOLS}/og-image/og-source.html", "wait": 3500, "shot": "og-image", "quality": 88}
+]
