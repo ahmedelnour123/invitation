@@ -6,6 +6,7 @@ needed by the website itself.
 | File | What it does |
 |---|---|
 | `design/build_from_canva.py` | Builds the site artwork from the Canva design's own layers in `design/canva/` → `assets/` (card art, cloth, paper grain, «و», flourish and icons) |
+| `make-audio.mjs` | Turns any audio/video file into the site's background music → `assets/audio/NAME.webm` (Opus) + `NAME.m4a` (AAC) |
 | `make-video.mjs` | Records the portrait 1080×1920 video of the site → `video/invitation-vN.mp4` (next free number) |
 | `video/storyboard.js` | Scene order and timing: curtains opening → first page → each marked part of the page alone → closing with the grass and cloth → QR scene |
 | `video/video-mode.css` | Look of the video: the first page's art and pillars as one fixed frame, one scene at a time inside the arch, fades |
@@ -56,6 +57,21 @@ placed with the same Canva boxes in `index.html`. `assets/curtain.svg` (the
 opening's fabric) is hand-made. The self-hosted font in `assets/fonts/` (XB Shafigh,
 for the verse) was converted from its free release with fontTools (`pyftsubset … --flavor=woff2`);
 its licence is next to it.
+
+**Background music** → `assets/audio/NAME.webm` + `NAME.m4a`. Give it any
+audio or video file; it drops the video, trims silence at both ends, brings the
+loudness down to a gentle background level (-18 LUFS, so it isn't loud on
+iPhones, where a page can't lower the volume) and fades the ends so the loop is
+smooth. Opus is the smallest music format on the web; AAC is the fallback for
+iPhones that can't play it. The page lists both and each phone loads one:
+
+```bash
+node Tools/make-audio.mjs path/to/song.mp3
+```
+
+Then set `music.src` in `config.js` to the printed path (without the
+extension). Options: `--name`, `--start`/`--end` (seconds, to use part of a
+song), `--loudness -20` (quieter), `--mono` (about half the size), `--fade 0`.
 
 **Video** → `video/invitation-vN.mp4` (1080×1920, 30 fps, no sound). Each run
 saves the next version number (v3, v4, …) so earlier videos are kept. Re-run
