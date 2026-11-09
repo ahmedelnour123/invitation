@@ -149,16 +149,21 @@ a { color: inherit; }
   width: 100%;
   height: auto;
 }
-/* verse + intro as one block, centred in the first page */
+/* verse + intro as one block, centred in the first page and enlarged --k times
+   (the Canva layout scaled up; 553 = the block's centre line in Canva units) */
 .card__content {
+  --k: 1.5;
+  --u: calc(100cqw / 1080 * var(--k));
   position: absolute;
   z-index: 2;
   left: 0;
   right: 0;
-  top: 50%;
-  height: calc(270.98 * var(--u));
+  /* centred, but never higher than just under the side flowers (y 1010 in Canva units) */
+  top: max(50%, calc((1010 + 156.22 * var(--k)) * 100cqw / 1080));
+  height: calc(312.44 * var(--u));
   translate: 0 -50%;
 }
+.card .card__content .t { left: calc(50% + (var(--l) - 553) * var(--u)); }
 
 .card .t {
   position: absolute;
