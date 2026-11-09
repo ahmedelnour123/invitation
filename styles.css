@@ -60,27 +60,55 @@ a { color: inherit; }
   position: fixed;
   inset: -10%;
   z-index: -1;
-  background: url("assets/card.jpg") center / cover no-repeat;
+  background: url("assets/top.webp") center / cover no-repeat;
   filter: blur(36px) saturate(1.05);
   opacity: .5;
   pointer-events: none;
 }
 
 .page {
+  --cu: calc(var(--col) / 1080);        /* one Canva unit at the page's width */
+  position: relative;
+  isolation: isolate;
   width: var(--col);
   margin: 0 auto;
   background: var(--paper);
 }
+/* the pillars run down both sides of the whole page, from under the first
+   page's pillar tops to the last page's pillar bases (the art pieces on top
+   of them fade into these strips) */
+.page::before,
+.page::after {
+  content: "";
+  position: absolute;
+  top: calc(1040 * var(--cu));
+  bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-repeat: repeat-y;
+  background-position: 0 0;
+}
+.page::before {
+  left: 0;
+  width: calc(150 * var(--cu));
+  background-image: url("assets/pillar-left.webp");
+  background-size: 100% auto;
+}
+.page::after {
+  left: calc(968 * var(--cu));
+  width: calc(112 * var(--cu));
+  background-image: url("assets/pillar-right.webp");
+  background-size: 100% auto;
+}
+.card, .more { position: relative; z-index: 1; }
 /* big screens: no hard edge between the column and the background —
    the column's sides fade out over a blurred, wider copy of the card art */
 .glow { display: none; }
 @media (min-width: 600px) {
   .page {
     -webkit-mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
-            mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%);
   }
-  .more { padding-inline: 44px; }
-  .more .closing { margin-inline: -44px; }
   .glow {
     display: block;
     position: absolute;
@@ -88,9 +116,9 @@ a { color: inherit; }
     left: 50%;
     z-index: -1;
     width: calc(var(--col) * 2);
-    aspect-ratio: 1080 / 1920;
+    aspect-ratio: 1080 / 1160;
     translate: -50% 0;
-    background: url("assets/card.jpg") center top / 100% 100% no-repeat;
+    background: url("assets/top.webp") center top / 100% 100% no-repeat;
     filter: blur(42px) saturate(1.1);
     opacity: .75;
     pointer-events: none;
@@ -100,46 +128,36 @@ a { color: inherit; }
 }
 
 /* ============================================================
-   The card
-   Rebuilt from the Canva document: every piece has its Canva box
-   (--l left, --t top, --w width, --h height), font size (--fs) and
-   line height (--lh), in units of the 1080×1920 Canva page.
-   --u is one Canva unit at the current card size.
+   First page
+   The top of the Canva design, with the verse and opening words
+   centred on the screen. The text keeps its Canva boxes (--l left,
+   --t top within the block, --w width, --h height), font size (--fs)
+   and line height (--lh), in units of the 1080-wide Canva page;
+   --u is one Canva unit at the current width.
    ============================================================ */
 .card {
   --u: calc(100cqw / 1080);
-  position: relative;
   width: 100%;
-  aspect-ratio: 1080 / 1920;
+  height: max(100svh, calc(var(--col) * 1.45));
   container-type: inline-size;
   overflow: hidden;
-  background: #fff;
-  /* the art melts into the page below */
-  -webkit-mask-image: linear-gradient(to bottom, #000 93%, transparent 100%);
-          mask-image: linear-gradient(to bottom, #000 93%, transparent 100%);
 }
 .card__art {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
+  height: auto;
 }
-/* the satin cloth is its own layer (to be animated later) */
-.card__cloth {
+/* verse + intro as one block, centred in the first page */
+.card__content {
   position: absolute;
-  left: calc(-8.77 * var(--u));
-  top: calc(1324.45 * var(--u));
-  width: calc(1097.53 * var(--u));
-  max-width: none;
-  height: calc(572.44 * var(--u));
-  opacity: .82;
-}
-.card__grain {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  background: url("assets/texture.webp") 0 0 / 100% 100% no-repeat;
-  pointer-events: none;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: calc(270.98 * var(--u));
+  translate: 0 -50%;
 }
 
 .card .t {
@@ -178,8 +196,9 @@ a { color: inherit; }
    Below the card
    ============================================================ */
 .more {
-  position: relative;
-  padding: 8px 24px 56px;
+  /* keeps the text clear of the pillars on both sides */
+  --pad: max(44px, calc(140 * var(--cu)));
+  padding: 8px var(--pad) 0;
   text-align: center;
 }
 .section { padding: 40px 0; }
@@ -350,23 +369,30 @@ a { color: inherit; }
   transform: rotate(45deg);
 }
 
-/* closing: framed by the top of the card art (garland, chandelier, curtains) */
-.closing {
+/* closing: the last page ends with the bottom of the Canva design */
+.closing { padding-bottom: 0; }
+.ground {
   position: relative;
-  margin: 0 -24px;
-  padding: calc(var(--col) * .4) 24px 8px;
-  isolation: isolate;
+  /* full column width (undo .more's side padding), tucked slightly under the text above */
+  margin: calc(-40 * var(--cu)) calc(-1 * var(--pad)) 0;
+  aspect-ratio: 1080 / 770;
+  pointer-events: none;
 }
-.section + .closing { border-top: 0; }
-.closing::before {
-  content: "";
+.ground__art {
   position: absolute;
-  inset: 0 0 auto;
-  z-index: -1;
-  aspect-ratio: 720 / 760;
-  background: url("assets/card.jpg") top center / 100% auto no-repeat;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 62%, transparent 100%);
-          mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 62%, transparent 100%);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+/* the satin cloth is its own layer (to be animated later); Canva box, relative to .ground */
+.ground__cloth {
+  position: absolute;
+  left: calc(-8.77 * var(--cu));
+  top: calc(174.45 * var(--cu));
+  width: calc(1097.53 * var(--cu));
+  max-width: none;
+  height: calc(572.44 * var(--cu));
+  opacity: .82;
 }
 .closing__big {
   font-family: var(--font-script);

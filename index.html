@@ -33,7 +33,7 @@
   <meta name="twitter:image" content="https://khidir-amal.ahmedelnour.com/og-image.jpg">
   <meta name="twitter:image:alt" content="دعوة زفاف خضر وأمل">
 
-  <link rel="preload" as="image" href="assets/card.jpg">
+  <link rel="preload" as="image" href="assets/top.webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&family=Gulzar&display=swap" rel="stylesheet">
@@ -75,23 +75,19 @@
          data-video-hide          → hidden in the video (buttons, tap hint) -->
   <main class="page">
 
-    <!-- The card: the Canva design rebuilt layer by layer (only the verse and the
-         opening words stay on it — names, families, date and venue are below).
-         Every piece has the box it has in the Canva document (left, top, width,
-         height and font size, in units of the 1080×1920 Canva page — see styles.css),
-         so the text sits exactly where the designer put it.
-         --i = order in which the pieces fade in after the curtains open. -->
+    <!-- First page: the top of the Canva design (chandelier, flowers, curtains,
+         the pillars' top halves) with the verse and opening words centred.
+         The text keeps its Canva sizes and spacing (units of the 1080-wide
+         Canva page — see styles.css). --i = fade-in order after the curtains open.
+         The pillars then run down both sides of the page (.page::before/::after)
+         and the grass, cloth and leaves close the last page (.ground). -->
     <header class="card" data-video-scene="card" data-video-hold="7000">
-      <img class="card__art" src="assets/card.jpg" alt="" width="1440" height="2560" fetchpriority="high">
-      <img class="card__cloth" src="assets/cloth.webp" alt="" width="1463" height="763">
-
-      <p class="t c t-verse" style="--l:290.87;--t:387.21;--w:524.25;--h:61.42;--fs:24.72;--lh:30.71;--i:0" data-field="verse"></p>
-      <p class="t c t-verse" style="--l:295.27;--t:432.61;--w:121.34;--h:16.03;--fs:14.03;--lh:16.03;--i:0" data-field="verseRef"></p>
-
-      <div class="t c t-intro" style="--l:210.55;--t:492.35;--w:690.77;--h:165.84;--fs:30.79;--lh:41.46;--i:1" data-field="intro"></div>
-
-      <!-- Canva lays a faint paper grain over the whole card, text included -->
-      <div class="card__grain" aria-hidden="true"></div>
+      <img class="card__art" src="assets/top.webp" alt="" width="1440" height="1547" fetchpriority="high">
+      <div class="card__content">
+        <p class="t c t-verse" style="--l:290.87;--t:0;--w:524.25;--h:61.42;--fs:24.72;--lh:30.71;--i:0" data-field="verse"></p>
+        <p class="t c t-verse" style="--l:295.27;--t:45.4;--w:121.34;--h:16.03;--fs:14.03;--lh:16.03;--i:0" data-field="verseRef"></p>
+        <div class="t c t-intro" style="--l:210.55;--t:105.14;--w:690.77;--h:165.84;--fs:30.79;--lh:41.46;--i:1" data-field="intro"></div>
+      </div>
     </header>
 
     <!-- ===== Below the card ===== -->
@@ -168,6 +164,13 @@
         </p>
         <p class="closing__date reveal" data-field="dateShort"></p>
         <img class="flourish reveal" src="assets/flourish.svg" alt="" width="1890" height="139">
+
+        <!-- the bottom of the Canva design: grass, pillar bases, leaves and the satin cloth
+             (the cloth is its own layer, ready to be animated) -->
+        <div class="ground" aria-hidden="true">
+          <img class="ground__art" src="assets/bottom.webp" alt="" width="1440" height="1027" loading="lazy">
+          <img class="ground__cloth" src="assets/cloth.webp" alt="" width="1463" height="763" loading="lazy">
+        </div>
       </footer>
     </div>
   </main>

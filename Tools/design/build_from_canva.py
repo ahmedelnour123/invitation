@@ -112,7 +112,16 @@ def pillar_strip(card, spec):
     x0, x1 = (px(v) for v in spec["x"])
     s0, s1 = (px(v) for v in spec["solid"])
     y0, y1 = (px(v) for v in SHAFT_ROWS)
-    piece = np.asarray(card.crop((x0, y0, x1, y1))).copy()
+    piece = np.asarray(card.crop((x0, y0, x1, y1))).astype(np.float32)
+    # even out the slow light/dark drift down the shaft so the repeats don't show
+    # (keeps the fluting and the paper grain; removes the watercolour blotches)
+    k = 81
+    pad = np.pad(piece[..., :3], ((k // 2, k // 2), (0, 0), (0, 0)), mode="reflect")
+    csum = np.cumsum(pad, axis=0)
+    csum = np.concatenate([np.zeros_like(csum[:1]), csum], axis=0)
+    trend = (csum[k:] - csum[:-k]) / k
+    piece[..., :3] = piece[..., :3] - trend + trend.mean(axis=0, keepdims=True)
+    piece = np.clip(piece, 0, 255).astype(np.uint8)
     tile = np.concatenate([piece, piece[::-1]], axis=0)
     w = x1 - x0
     alpha = np.ones(w)

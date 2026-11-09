@@ -41,16 +41,17 @@ Tools/.venv/Scripts/python -m pip install -r Tools/requirements.txt
 
 Run these from the project folder.
 
-**Site artwork** → `assets/card.jpg`, `cloth.webp`, `texture.webp`, `waw.webp`,
-`flourish.svg`, `icon-*.svg`. Built from the layer files saved from the Canva
-design in `design/canva/`. Re-run it if those files change:
+**Site artwork** → `assets/top.webp` (first page), `pillar-left.webp` /
+`pillar-right.webp` (repeated down the sides), `bottom.webp` and `cloth.webp`
+(last page), `waw.webp`, `flourish.svg`, `icon-*.svg`. Built from the layer files
+saved from the Canva design in `design/canva/`. Re-run it if those files change:
 
 ```bash
 Tools/.venv/Scripts/python Tools/design/build_from_canva.py
 ```
 
 The layer positions at the top of the script are copied from the Canva document
-(1080×1920 page). The text on the card is not in these images: it is live text
+(1080×1920 page), and so are the cut lines between the three pieces. The text on the card is not in these images: it is live text
 placed with the same Canva boxes in `index.html`. `assets/curtain.svg` (the
 opening's fabric) is hand-made. The self-hosted font in `assets/fonts/` (XB Shafigh,
 for the verse) was converted from its free release with fontTools (`pyftsubset … --flavor=woff2`);
