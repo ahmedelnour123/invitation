@@ -160,6 +160,8 @@ a { color: inherit; }
   width: 100%;
   height: auto;
 }
+/* all of the first page's text (one layer, so the video can fade it as one scene) */
+.card__text { position: absolute; inset: 0; z-index: 2; }
 .card__content {
   position: absolute;
   z-index: 2;

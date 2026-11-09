@@ -1,9 +1,9 @@
 // Records a portrait 1080×1920 video of the invitation website.
 // It opens the site in headless Edge/Chrome at phone size and switches it to
-// "video mode" (Tools/video/video-mode.css): one fixed background with the top
-// and bottom strips, and each part of the page marked data-video-scene shown
-// alone, fading from one to the next (Tools/video/storyboard.js). It starts
-// with the smoke opening and ends with a QR scene, then encodes an MP4 with ffmpeg.
+// "video mode" (Tools/video/video-mode.css): one fixed frame (the first page's
+// art and pillars), and each part of the page marked data-video-scene shown
+// alone inside the arch, fading from one to the next (Tools/video/storyboard.js). It starts
+// with the curtains opening and ends with a QR scene, then encodes an MP4 with ffmpeg.
 //
 // The page's clock is controlled: time is paused, moved forward exactly one
 // frame (1/fps s), a full-resolution screenshot is taken, and so on. Every

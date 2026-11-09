@@ -22,7 +22,7 @@
   <meta property="og:title" content="دعوة زفاف خضر وأمل">
   <meta property="og:description" content="يسرّنا دعوتكم لحضور حفل زفاف خضر وأمل — حبابكم عشرة">
   <meta property="og:url" content="https://khidir-amal.ahmedelnour.com/">
-  <meta property="og:image" content="https://khidir-amal.ahmedelnour.com/og-image.jpg">
+  <meta property="og:image" content="https://khidir-amal.ahmedelnour.com/og-image.jpg?v=2">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -30,7 +30,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="دعوة زفاف خضر وأمل">
   <meta name="twitter:description" content="يسرّنا دعوتكم لحضور حفل زفاف خضر وأمل — حبابكم عشرة">
-  <meta name="twitter:image" content="https://khidir-amal.ahmedelnour.com/og-image.jpg">
+  <meta name="twitter:image" content="https://khidir-amal.ahmedelnour.com/og-image.jpg?v=2">
   <meta name="twitter:image:alt" content="دعوة زفاف خضر وأمل">
 
   <link rel="preload" as="image" href="assets/top.webp">
@@ -72,7 +72,8 @@
        Video attributes (used only by Tools/make-video.mjs, no effect on the site):
          data-video-scene="name"  → shown alone as one scene, in page order
          data-video-hold="ms"     → how long the scene stays on screen
-         data-video-hide          → hidden in the video (buttons, tap hint) -->
+         data-video-hide          → hidden in the video (buttons, map, tap hint, scroll cue)
+       The countdown is left out of the video on purpose (it would be out of date). -->
   <main class="page">
 
     <!-- First page: the top of the Canva design (chandelier, flowers, curtains,
@@ -82,8 +83,9 @@
          styles.css). --i = fade-in order after the curtains open.
          The pillars stand on this page and on the last one (.card / .closing
          ::before/::after); the last page ends with the grass and cloth (.ground). -->
-    <header class="card" data-video-scene="card" data-video-hold="7000">
+    <header class="card">
       <img class="card__art" src="assets/top.webp" alt="" width="1440" height="1547" fetchpriority="high">
+      <div class="card__text" data-video-scene="first" data-video-hold="7000">
       <!-- the verse, large, in the open sky under the chandelier -->
       <div class="card__verse c" style="--i:0">
         <p class="card__verse-text" data-field="verse"></p>
@@ -102,7 +104,8 @@
         </h1>
         <p class="card__date c" style="--i:6"><span data-field="weekday"></span><span class="num" data-field="dateShort"></span></p>
       </div>
-      <a class="scroll-cue c" style="--i:7" href="#hosts" aria-label="تابع القراءة">
+      </div>
+      <a class="scroll-cue c" style="--i:7" href="#hosts" aria-label="تابع القراءة" data-video-hide>
         <svg viewBox="0 0 48 30" aria-hidden="true"><path d="M4 4l20 20L44 4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </header>
@@ -144,7 +147,7 @@
         <p class="info__main reveal" data-field="venueName"></p>
         <p class="info__meta reveal" data-field="venueDescription"></p>
         <p class="info__meta reveal" data-field="venuePlace"></p>
-        <div class="map reveal" id="mapBox">
+        <div class="map reveal" id="mapBox" data-video-hide>
           <iframe title="موقع القاعة على الخريطة" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
         </div>
         <div class="actions reveal" data-video-hide>
@@ -153,7 +156,7 @@
       </section>
 
       <!-- Countdown -->
-      <section class="section info countdown" id="countdown-section" aria-labelledby="cdTitle" data-video-scene="countdown" data-video-hold="4000">
+      <section class="section info countdown" id="countdown-section" aria-labelledby="cdTitle">
         <img class="info__icon reveal" src="assets/icon-clock.svg" alt="" width="60" height="64">
         <h2 class="s-title reveal" id="cdTitle">العدّ التنازلي</h2>
         <p class="info__meta reveal">حتى ليلة الفرح</p>

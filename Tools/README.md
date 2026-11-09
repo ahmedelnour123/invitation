@@ -7,8 +7,8 @@ needed by the website itself.
 |---|---|
 | `design/build_from_canva.py` | Builds the site artwork from the Canva design's own layers in `design/canva/` → `assets/` (card art, cloth, paper grain, «و», flourish and icons) |
 | `make-video.mjs` | Records the portrait 1080×1920 video of the site → `video/invitation-vN.mp4` (next free number) |
-| `video/storyboard.js` | Scene order and timing: smoke opening → each marked part of the page alone → QR scene |
-| `video/video-mode.css` | Look of the video: one fixed background with the strips, one scene at a time, fades |
+| `video/storyboard.js` | Scene order and timing: curtains opening → first page → each marked part of the page alone → closing with the grass and cloth → QR scene |
+| `video/video-mode.css` | Look of the video: the first page's art and pillars as one fixed frame, one scene at a time inside the arch, fades |
 | `cdp-shots.mjs` | Opens pages in headless Edge/Chrome and saves screenshots, following a plan file in `plans/` |
 | `make_qr.py` | Creates the styled QR code SVG (rounded dots, rounded corner eyes, incense-burner emblem) |
 | `verify_qr.py` | Confirms the QR images really scan (full size, shrunk, grayscale) and the background slot is empty |
@@ -72,11 +72,14 @@ Or record the live site, or choose another output file:
 node Tools/make-video.mjs --site https://khidir-amal.ahmedelnour.com --out video/final.mp4
 ```
 
-How it works: the page opens in "video mode" — one fixed background with the
-top and bottom strips — and each part of the page is shown alone, centred,
-fading out before the next one fades in. It starts with the smoke opening
-(no tap hint) and ends on a QR scene built from `qr/qr-code.svg`, the names
-in `config.js` and the address in the page's canonical link.
+How it works: the page opens in "video mode" — the first page's art
+(chandelier, flowers, curtains) with the pillars down to the bottom of the
+screen stays as one fixed frame, and each part of the page is shown alone
+inside the arch, fading out before the next one fades in. It starts with the
+curtains swaying and opening (no tap hint) onto the first page; for the
+closing the grass, cloth and leaves rise in at the bottom; it ends on a QR
+scene built from `qr/qr-code.svg`, the names in `config.js` and the address
+in the page's canonical link. The countdown and the map are left out.
 
 The scenes are chosen in `index.html` with these attributes (they have no
 effect on the website itself):
@@ -85,12 +88,12 @@ effect on the website itself):
 |---|---|
 | `data-video-scene="name"` | Show this element alone as one scene. Scenes play in page order. |
 | `data-video-hold="4000"` | How long the scene stays on screen, in milliseconds (default 4000). |
-| `data-video-hide` | Hide this element in the video (the buttons, the tap hint). |
+| `data-video-hide` | Hide this element in the video (the buttons, the map, the tap hint, the scroll cue). |
 
 So to drop a part from the video, remove its `data-video-scene`; to add a new
-section, give it one. The opening, smoke, fade and QR timings are at the top
-of `video/storyboard.js`. A scene that is too tall for the screen is shrunk to
-fit, and the names in the QR scene are lined up by the middle of their letters.
+section, give it one. The curtain, fade, ground and QR timings are at the top
+of `video/storyboard.js`. A scene that is too tall for its space in the arch
+is shrunk to fit.
 
 Rendering takes about 3 minutes: the page clock is advanced one frame at a
 time and each frame is a full-resolution screenshot, so the result is smooth
