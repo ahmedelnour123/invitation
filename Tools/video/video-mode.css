@@ -1,0 +1,93 @@
+/* ============================================================
+   Video mode — added to the page only while Tools/make-video.mjs
+   records. One fixed background with the top & bottom strips;
+   every [data-video-scene] is stacked in the centre and shown
+   one at a time (.is-video-active), fading in and out.
+   ============================================================ */
+
+html.video-mode { font-size: 17.5px; }            /* text a touch larger for a full-screen scene */
+html.video-mode,
+.video-mode body { height: 100%; overflow: hidden; }
+
+/* one unified background */
+.video-mode .page { padding: 0 !important; }
+.video-mode .paper {
+  position: fixed;
+  inset: 0;
+  max-width: none;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
+.video-mode .paper::after {                        /* soft warm glow in the middle */
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 80% 55% at 50% 50%, rgba(122,31,43,.35) 0%, transparent 70%);
+}
+
+/* strips stay fixed at the very top and bottom */
+.video-mode .band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 5;
+  height: 22px;
+  background-size: auto 22px;
+}
+.video-mode .band--bottom { top: auto; bottom: 0; }
+
+/* page-only bits */
+.video-mode .divider { display: none; }
+.video-mode [data-video-hide] { display: none !important; }
+.video-mode .details { position: static; padding: 0; }
+/* show the site's scroll-reveal content straight away — but not on scenes themselves
+   (the date & venue cards are scenes AND .reveal: they need their centring and fades) */
+.video-mode .reveal:not([data-video-scene]) { opacity: 1 !important; transform: none !important; transition: none !important; }
+.video-mode .hero { background: none; }
+
+/* scenes: all stacked in the centre, invisible until active */
+.video-mode [data-video-scene] {
+  position: absolute !important;
+  left: 0;
+  right: 0;
+  top: 50%;
+  z-index: 2;
+  margin: 0 !important;
+  transform: translateY(-50%) scale(var(--fit, 1));
+  transform-origin: 50% 50%;
+  opacity: 0;
+  visibility: hidden;
+  transition: none;               /* fades are driven frame by frame from storyboard.js */
+}
+.video-mode [data-video-scene].is-video-active { visibility: visible; }
+.video-mode.video-preload [data-video-scene] { visibility: visible !important; }   /* setup only: load fonts */
+.video-mode .section[data-video-scene] { padding-top: 24px; padding-bottom: 24px; }
+.video-mode .card[data-video-scene] { left: 24px; right: 24px; }
+.video-mode [data-video-scene].reveal { transform: translateY(-50%) scale(var(--fit, 1)) !important; transition: none !important; }
+
+/* ---------- QR scene (built by the storyboard) ---------- */
+.vqr { display: grid; justify-items: center; gap: 14px; }
+.vqr__names {
+  font-family: var(--font-script);
+  font-weight: 700;
+  font-size: 3.2rem;
+  line-height: 1.3;
+  color: var(--title);
+  text-shadow: 0 0 22px rgba(217,190,134,.32);
+}
+.vqr__names i { font-style: normal; font-family: var(--font-body); font-weight: 400; font-size: .45em; color: var(--accent); margin: 0 .4em; }
+.vqr__names > * { display: inline-block; }      /* vertically lined up by storyboard.js (alignInk) */
+.vqr__panel {
+  width: 250px;
+  padding: 20px;
+  background: #FBF6EC;
+  border-radius: 22px;
+  box-shadow: 0 0 0 2px var(--gold), 0 0 0 8px #1D0A0E, 0 0 0 9px rgba(217,190,134,.5), 0 20px 40px rgba(0,0,0,.5);
+}
+.vqr__panel svg { display: block; width: 100%; height: auto; }
+.vqr__scan { margin-top: 10px; font-family: var(--font-ui); font-size: 1.15rem; color: var(--text); }
+.vqr__url { font-family: var(--font-ui); font-size: .95rem; color: var(--gold-soft); direction: ltr; letter-spacing: .5px; }

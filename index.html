@@ -75,17 +75,21 @@
       <span class="puff" style="--delay:6.4s;--dur:6.8s;--dx:-2"></span>
       <div class="mabkhara"><svg aria-hidden="true"><use href="#mabkhara"/></svg></div>
       <div class="smk-fog"></div>
-      <p class="intro__hint">اضغط لفتح الدعوة</p>
+      <p class="intro__hint" data-video-hide>اضغط لفتح الدعوة</p>
     </div>
   </div>
 
-  <!-- ===== Invitation ===== -->
+  <!-- ===== Invitation =====
+       Video attributes (used only by Tools/make-video.mjs, no effect on the site):
+         data-video-scene="name"  → shown alone as one scene, in page order
+         data-video-hold="ms"     → how long the scene stays on screen
+         data-video-hide          → hidden in the video (buttons, tap hint) -->
   <main class="page">
     <div class="paper">
       <div class="band" aria-hidden="true"></div>
 
       <!-- Hero -->
-      <header class="hero section">
+      <header class="hero section" data-video-scene="hero" data-video-hold="4500">
         <div class="hero__inner">
           <p class="basmala reveal">بسم الله الرحمن الرحيم</p>
           <p class="kicker reveal">دعوة حفل زفاف</p>
@@ -124,14 +128,14 @@
       <div class="divider" aria-hidden="true"></div>
 
       <!-- Verse & intro -->
-      <section class="section verse">
+      <section class="section verse" data-video-scene="verse" data-video-hold="5500">
         <p class="verse__text reveal">﴿ <span data-field="verse"></span> ﴾</p>
         <p class="verse__ref reveal" data-field="verseRef"></p>
         <div class="intro-text reveal" data-field="intro"></div>
       </section>
 
       <!-- Host families -->
-      <section class="section hosts">
+      <section class="section hosts" data-video-scene="families" data-video-hold="5500">
         <h2 class="label reveal">يتشرّف</h2>
         <ul class="hosts__list reveal" data-field="families"></ul>
         <p class="hosts__line reveal" data-field="invitationLine"></p>
@@ -141,32 +145,32 @@
 
       <!-- Details -->
       <section class="section details">
-        <article class="card reveal">
+        <article class="card reveal" data-video-scene="date" data-video-hold="4000">
           <svg class="card__icon" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="7" width="22" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5 13h22M11 4v6M21 4v6" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
           <h3 class="card__title">الموعد</h3>
           <p class="card__main" data-field="weekdayDate">[اليوم والتاريخ]</p>
           <p class="card__meta" data-field="dateHijri">[التاريخ الهجري]</p>
           <p class="card__meta" data-field="time">[الساعة]</p>
-          <div class="card__actions">
+          <div class="card__actions" data-video-hide>
             <a class="btn" id="gcalBtn" href="#" target="_blank" rel="noopener">أضف إلى تقويم Google</a>
             <button class="btn btn--ghost" id="icsBtn" type="button">أضف إلى تقويم الجوال</button>
           </div>
         </article>
 
-        <article class="card reveal">
+        <article class="card reveal" data-video-scene="venue" data-video-hold="4000">
           <svg class="card__icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 29s9-8.5 9-15a9 9 0 0 0-18 0c0 6.5 9 15 9 15z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="16" cy="14" r="3.2" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
           <h3 class="card__title">المكان</h3>
           <p class="card__main" data-field="venueName">[اسم القاعة]</p>
           <p class="card__meta" data-field="venueDescription"></p>
           <p class="card__meta"><span data-field="venueCity">[المدينة]</span> — <span data-field="venueAddress">[العنوان]</span></p>
-          <div class="card__actions">
+          <div class="card__actions" data-video-hide>
             <a class="btn" id="mapBtn" href="#" target="_blank" rel="noopener">عرض الموقع على الخريطة</a>
           </div>
         </article>
       </section>
 
       <!-- Countdown -->
-      <section class="section countdown" aria-labelledby="cdTitle">
+      <section class="section countdown" aria-labelledby="cdTitle" data-video-scene="countdown" data-video-hold="4000">
         <h2 class="label reveal" id="cdTitle">العدّ التنازلي</h2>
         <p class="countdown__sub reveal">حتى ليلة الفرح</p>
         <div class="countdown__grid reveal" id="countdown" role="timer" aria-live="off">
@@ -179,7 +183,7 @@
       </section>
 
       <!-- Notes -->
-      <section class="section notes" id="notesSection">
+      <section class="section notes" id="notesSection" data-video-scene="notes" data-video-hold="4500">
         <div class="note reveal">
           <h2 class="label">ملاحظات</h2>
           <ul class="note__list" data-field="notes"></ul>
@@ -187,7 +191,7 @@
       </section>
 
       <!-- Closing -->
-      <footer class="section closing">
+      <footer class="section closing" data-video-scene="closing" data-video-hold="4500">
         <p class="closing__big reveal" data-field="closing"></p>
         <p class="closing__sub reveal" data-field="closingSub"></p>
         <p class="closing__names reveal"><span data-field="groomName"></span> <span class="amp">&amp;</span> <span data-field="brideName"></span></p>
