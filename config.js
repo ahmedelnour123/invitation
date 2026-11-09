@@ -19,16 +19,13 @@ window.WEDDING = {
   },
 
   /* ---------- الأسر الداعية | Host families ---------- */
-  // clans  = the two lines on the card («آل …»)
-  // father / mother = the full names in the section below the card
+  // father / mother = the parents' full names
   families: [
-    { // أهل العريس (right column on the card)
-      clans: ["آل خضر", "آل محمد"],
+    { // أهل العريس
       father: "صديق خضر علي حمد",
       mother: "حرم محمد أبوعشي ميدم"
     },
-    { // أهل العروس (left column on the card)
-      clans: ["آل حمد السيد", "آل علي"],
+    { // أهل العروس
       father: "جمعة حمدالسيد محمد جماعة",
       mother: "فطيمة علي محمد جماعة"
     }
@@ -42,10 +39,9 @@ window.WEDDING = {
   // Optional: if the auto-calculated Hijri date is off by a day, write
   // the correct one here, e.g. "1 رجب 1448 هـ". Leave "" for automatic.
   hijriOverride: "",
-  timeLabel: "الاستقبال",                     // the word above the time on the card
+  timeLabel: "الاستقبال",                     // «الاستقبال الساعة 9:00 مساءً»
 
   /* ---------- المكان | Venue ---------- */
-  // On the card the name is split over two lines at the first space («قاعة / الأفراح»).
   // Empty fields are hidden; the map button appears once mapUrl is filled in.
   venue: {
     name: "قاعة الأفراح",
@@ -57,20 +53,19 @@ window.WEDDING = {
 
   /* ---------- النصوص | Text ---------- */
   // \n = new line. The «ـــ» stretches are part of the design.
-  verse: "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا\nوَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً",
+  // The verse is written as in the design, with its brackets; \n is where the card breaks the line.
+  verse: "﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنفُسِكُمْ أَزْوَاجًا لِتَسْكُنُوا إِلَيْهَا\nوَجَعَلَ بَيْنَكُمْ مَوَدَّةً وَرَحْمَةً ﴾",
   verseRef: "سورة الروم: الآية ٢١",
 
   intro: [
     "على بركة الله، وفي ليلةٍ نرجو أن تكون",
-    "أولَ صفحةٍ في حكايـــةٍ طيّبـــة،",
+    "أولَ صفحةٍ في حكايــــــةٍ طيّبـــــة،",
     "يجمع الله قلبين على المودّة والرحمة،",
     "ويسعدنا أن تكونوا معنا ونحن نحتفل بهذه البداية."
   ],
 
-  hostsLabel: "يتشـــرف",
-  cardInvite: "بدعوتكـم لحضـور زفـاف",       // short line on the card
-  invitationLine: "بدعوتكم لحضور حفل زفاف نجليهما وتناول طعام العشاء\nالعز بالأهل",  // full line below the card
-  blessing: "وذلك بمشيئة الله تعالى",
+  hostsLabel: "يتشـــــــــرف",
+  invitationLine: "بدعوتكم لحضور حفل زفاف نجليهما وتناول طعام العشاء",  // full line below the card
 
   notes: [
     "[ملاحظة ١ — مثال: الحفل للبالغين فقط]",

@@ -5,7 +5,7 @@ needed by the website itself.
 
 | File | What it does |
 |---|---|
-| `design/make_assets.py` | Cuts the site artwork out of the flat design image `design/reference.jpg` → `assets/` (card art with the text painted out, flourish, «و», paper texture) |
+| `design/build_from_canva.py` | Builds the site artwork from the Canva design's own layers in `design/canva/` → `assets/` (card art, cloth, paper grain, «و», flourish and icons) |
 | `make-video.mjs` | Records the portrait 1080×1920 video of the site → `video/invitation-vN.mp4` (next free number) |
 | `video/storyboard.js` | Scene order and timing: smoke opening → each marked part of the page alone → QR scene |
 | `video/video-mode.css` | Look of the video: one fixed background with the strips, one scene at a time, fades |
@@ -41,18 +41,20 @@ Tools/.venv/Scripts/python -m pip install -r Tools/requirements.txt
 
 Run these from the project folder.
 
-**Site artwork** → `assets/card.jpg`, `flourish.png`, `waw.png`, `paper.jpg`
-(re-run only if `design/reference.jpg` changes; add `--debug <folder>` to also
-save the text mask and a before/after image). When the designer's layered files
-arrive they replace these files directly, and this step is no longer needed:
+**Site artwork** → `assets/card.jpg`, `cloth.webp`, `texture.webp`, `waw.webp`,
+`flourish.svg`, `icon-*.svg`. Built from the layer files saved from the Canva
+design in `design/canva/`. Re-run it if those files change:
 
 ```bash
-Tools/.venv/Scripts/python Tools/design/make_assets.py
+Tools/.venv/Scripts/python Tools/design/build_from_canva.py
 ```
 
-The text boxes it paints out are listed at the top of the script, in pixels of
-the 720×1280 design. `assets/curtain.svg` (the opening's fabric) is hand-made,
-not generated.
+The layer positions at the top of the script are copied from the Canva document
+(1080×1920 page). The text on the card is not in these images: it is live text
+placed with the same Canva boxes in `index.html`. `assets/curtain.svg` (the
+opening's fabric) is hand-made. The self-hosted font in `assets/fonts/` (XB Shafigh,
+for the verse) was converted from its free release with fontTools (`pyftsubset … --flavor=woff2`);
+its licence is next to it.
 
 **Video** → `video/invitation-vN.mp4` (1080×1920, 30 fps, no sound). Each run
 saves the next version number (v3, v4, …) so earlier videos are kept. Re-run

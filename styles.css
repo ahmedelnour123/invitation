@@ -1,30 +1,36 @@
 /* ============================================================
    Wedding invitation — watercolour design
-   The card at the top is the design itself: the artwork
-   (assets/card.jpg, cut from the design) with the live text laid
-   on top at the design's own positions. Everything on the card is
-   measured in design pixels of the 720×1280 artwork: --u is one
-   design pixel at the current card size.
+   The card at the top is the Canva design rebuilt from its own
+   layers (assets/, made by Tools/design/build_from_canva.py) with
+   the live text placed at the Canva positions, in the Canva fonts.
    ============================================================ */
 
-:root {
-  /* colours sampled from the design */
-  --paper: #F3F4F1;
-  --verse: #978E90;      /* Quran verse */
-  --body: #747D74;       /* grey-green paragraph text */
-  --grey: #7B776D;       /* «وذلك بمشيئة الله تعالى» */
-  --soft: #9EA29C;       /* «وبحضوركم تكتمل فرحتنا» */
-  --rose: #9C7684;       /* families */
-  --rose-brown: #8E6F6C; /* «يتشرف» */
-  --copper: #925F51;     /* the names */
-  --red: #874F4C;        /* info labels and icons */
-  --accent: #A8737F;     /* buttons */
+/* the design font that is not on Google Fonts (free licence in assets/fonts/) */
+@font-face {
+  font-family: "XB Shafigh";
+  src: url("assets/fonts/xb-shafigh-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
 
-  --font-quran: "Amiri Quran", "Amiri", serif;
-  --font-body: "Amiri", "Times New Roman", serif;
-  --font-script: "Aref Ruqaa", "Amiri", serif;
-  --font-ui: "Reem Kufi", "Segoe UI", Tahoma, sans-serif;
-  --ui-gap: .18em;       /* Reem Kufi's spaces are narrow: widen them a little */
+:root {
+  /* colours from the Canva design */
+  --paper: #FBFBF9;
+  --verse: #B29292;      /* Quran verse */
+  --body: #70886C;       /* green-grey paragraph text */
+  --grey: #8A756F;       /* «وذلك بمشيئة الله تعالى» */
+  --soft: #A9B8A9;       /* «وبحضوركم تكتمل فرحتنا» */
+  --rose: #AD6476;       /* families */
+  --rose-brown: #A06655; /* «يتشرف» */
+  --copper: #A06655;     /* the names */
+  --red: #972726;        /* info labels and icons */
+  --accent: #AD6476;     /* buttons */
+
+  --font-quran: "XB Shafigh", "Amiri", serif;
+  --font-body: "Almarai", "Segoe UI", Tahoma, sans-serif;
+  --font-script: "Gulzar", "Almarai", serif;
+  --font-ui: "Almarai", "Segoe UI", Tahoma, sans-serif;
+  --ui-gap: 0;
 
   /* page column: full width on phones, a phone-sized column on big screens */
   --col: min(100vw, 480px);
@@ -63,174 +69,106 @@ a { color: inherit; }
 .page {
   width: var(--col);
   margin: 0 auto;
-  background: var(--paper) url("assets/paper.jpg") 0 0 / 640px auto;   /* watercolour paper */
+  background: var(--paper);
 }
+/* big screens: no hard edge between the column and the background —
+   the column's sides fade out over a blurred, wider copy of the card art */
+.glow { display: none; }
 @media (min-width: 600px) {
-  .page { box-shadow: 0 0 70px rgba(110, 125, 135, .22); }
+  .page {
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
+  }
+  .more { padding-inline: 44px; }
+  .more .closing { margin-inline: -44px; }
+  .glow {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: -1;
+    width: calc(var(--col) * 2);
+    aspect-ratio: 1080 / 1920;
+    translate: -50% 0;
+    background: url("assets/card.jpg") center top / 100% 100% no-repeat;
+    filter: blur(42px) saturate(1.1);
+    opacity: .75;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 75%);
+            mask-image: linear-gradient(to bottom, #000 45%, transparent 75%);
+  }
 }
 
 /* ============================================================
    The card
+   Rebuilt from the Canva document: every piece has its Canva box
+   (--l left, --t top, --w width, --h height), font size (--fs) and
+   line height (--lh), in units of the 1080×1920 Canva page.
+   --u is one Canva unit at the current card size.
    ============================================================ */
 .card {
-  --u: calc(100cqw / 720);              /* one design pixel */
+  --u: calc(100cqw / 1080);
   position: relative;
   width: 100%;
-  aspect-ratio: 720 / 1280;
+  aspect-ratio: 1080 / 1920;
   container-type: inline-size;
   overflow: hidden;
+  background: #fff;
+  /* the art melts into the page below */
+  -webkit-mask-image: linear-gradient(to bottom, #000 93%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 93%, transparent 100%);
 }
 .card__art {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  /* the art melts into the paper below */
-  -webkit-mask-image: linear-gradient(to bottom, #000 92%, transparent 100%);
-          mask-image: linear-gradient(to bottom, #000 92%, transparent 100%);
+}
+/* the satin cloth is its own layer (to be animated later) */
+.card__cloth {
+  position: absolute;
+  left: calc(-8.77 * var(--u));
+  top: calc(1324.45 * var(--u));
+  width: calc(1097.53 * var(--u));
+  max-width: none;
+  height: calc(572.44 * var(--u));
+  opacity: .82;
+}
+.card__grain {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: url("assets/texture.webp") 0 0 / 100% 100% no-repeat;
+  pointer-events: none;
 }
 
-/* every text piece is placed by its centre (x, y) in design pixels */
-.card .c {
+.card .t {
   position: absolute;
-  left: calc(var(--x) * var(--u));
-  top: calc(var(--y) * var(--u));
-  translate: -50% -50%;
+  z-index: 2;
+  left: calc(var(--l) * var(--u));
+  top: calc(var(--t) * var(--u));
+  width: calc(var(--w) * var(--u));
+  height: calc(var(--h) * var(--u));
+  max-width: none;
   margin: 0;
+  display: flex;
+  justify-content: center;          /* centred like Canva; long text spills evenly to both sides */
   text-align: center;
   white-space: nowrap;
+  font-size: calc(var(--fs, 20) * var(--u));
+  line-height: calc(var(--lh, var(--h)) * var(--u));
 }
 
-.c-verse {
-  --x: 371; --y: 277;
-  font-family: var(--font-quran);
-  font-size: calc(19 * var(--u));
-  line-height: calc(23 * var(--u));
-  color: var(--verse);
-}
-.c-verse__text { white-space: pre-line; }
-.c-verse__br { font-family: var(--font-quran); }
-.c-verse__ref {
-  font-family: var(--font-body);
-  font-size: calc(9 * var(--u));
-  margin-inline-start: calc(6 * var(--u));
-}
+.t-verse { font-family: var(--font-quran); font-weight: 700; color: var(--verse); }
+.card .t-verse { white-space: pre; }            /* keeps the verse's line break */
+/* Canva writes «الله» with plain letters, not Almarai's decorative ligature */
+.card .t { font-variant-ligatures: no-common-ligatures; }
+.t-intro { flex-direction: column; font-family: var(--font-body); color: var(--body); }
 
-.c-intro {
-  --x: 370; --y: 384;
-  font-family: var(--font-body);
-  font-size: calc(25.5 * var(--u));
-  line-height: calc(26.5 * var(--u));
-  color: var(--body);
-}
-
-.c-label {
-  --x: 373; --y: 478;
-  font-family: var(--font-ui);
-  word-spacing: var(--ui-gap);
-  font-size: calc(20 * var(--u));
-  color: var(--rose-brown);
-}
-
-/* families: two right-aligned columns with «و» between them */
-.card .c-clan {
-  translate: 0 0;
-  left: auto;
-  right: calc(var(--r) * var(--u));
-  top: calc(var(--t) * var(--u));
-  text-align: right;
-  white-space: pre-line;
-  font-family: var(--font-script);
-  font-size: calc(38 * var(--u));
-  line-height: calc(36 * var(--u));
-  color: var(--rose);
-}
-.c-clan--groom { --r: 170; --t: 501; }
-.c-clan--bride { --r: 400; --t: 501; }
-.c-clan-and {
-  --x: 371; --y: 543;
-  font-family: var(--font-script);
-  font-size: calc(36 * var(--u));
-  color: var(--rose);
-}
-
-.c-invite {
-  --x: 368; --y: 617;
-  font-family: var(--font-ui);
-  word-spacing: var(--ui-gap);
-  font-size: calc(20.5 * var(--u));
-  color: var(--body);
-}
-
-.c-flourish { width: calc(238 * var(--u)); max-width: none; }
-.c-flourish--top { --x: 371; --y: 661; }
-.c-flourish--bottom { --x: 371; --y: 819; }
-
-.c-names { margin: 0; font-weight: inherit; }
-.card .c-name {
-  font-family: var(--font-script);
-  font-weight: 700;
-  font-size: calc(104 * var(--u));
-  line-height: 1;
-  color: var(--copper);
-}
-.card .c-name--groom { translate: 0 -50%; left: auto; right: calc(168 * var(--u)); top: calc(733 * var(--u)); }
-.card .c-name--bride { translate: 0 -50%; left: calc(187 * var(--u)); top: calc(744 * var(--u)); }
-.c-waw { --x: 369; --y: 748; width: calc(32.5 * var(--u)); max-width: none; }
-
-.c-blessing {
-  --x: 362; --y: 887;
-  font-family: var(--font-ui);
-  word-spacing: var(--ui-gap);
-  font-size: calc(23 * var(--u));
-  color: var(--grey);
-}
-
-/* icon + two lines; the whole column is a link to its section */
-.card .c-info {
-  translate: -50% 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  font-family: var(--font-ui);
-  word-spacing: var(--ui-gap);
-  font-size: calc(15.5 * var(--u));
-  line-height: calc(18 * var(--u));
-  color: var(--red);
-  -webkit-tap-highlight-color: transparent;
-}
-.c-info--date  { --x: 481; --y: 902; }
-.c-info--venue { --x: 354; --y: 902; }
-.c-info--time  { --x: 238; --y: 902; }
-.c-info__icon {
-  width: calc(46 * var(--u));
-  height: calc(46 * var(--u));
-  margin-bottom: calc(12 * var(--u));
-  transition: transform .25s ease;
-}
-.c-info:hover .c-info__icon,
-.c-info:focus-visible .c-info__icon { transform: scale(1.08); }
-.c-info__num {
-  direction: ltr;
-  unicode-bidi: isolate;
-  letter-spacing: .28em;
-  margin-inline-end: -.28em;
-}
-
-.c-closing {
-  --x: 377; --y: 1016;
-  font-family: var(--font-ui);
-  word-spacing: var(--ui-gap);
-  font-size: calc(19 * var(--u));
-  color: var(--soft);
-}
-
-/* the card's text appears line by line after the curtains open */
+/* the card's text appears piece by piece after the curtains open */
 .js .card .c {
   opacity: 0;
-  filter: blur(calc(5 * var(--u)));
+  filter: blur(calc(6 * var(--u)));
   transition: opacity 1s ease, filter 1s ease;
   transition-delay: calc(var(--i, 0) * 110ms);
 }
@@ -310,7 +248,7 @@ a { color: inherit; }
 .hosts__waw { height: 2.6rem; width: auto; }
 
 /* date / venue / countdown */
-.info__icon { width: 46px; height: 46px; margin: 0 auto 6px; color: var(--red); }
+.info__icon { width: 46px; height: 46px; margin: 0 auto 16px; object-fit: contain; }
 .info__main {
   margin-top: 6px;
   font-family: var(--font-body);
@@ -483,18 +421,45 @@ a { color: inherit; }
   position: absolute;
   top: -2%;
   bottom: -2%;
-  width: 53%;
+  width: 64%;                /* overhangs the screen edge and overlaps in the middle,
+                                so the breeze never opens a gap */
   background: url("assets/curtain.svg") 0 0 / 200% 100% no-repeat;   /* each panel uses one half of the fabric */
   -webkit-backdrop-filter: blur(1.5px);
           backdrop-filter: blur(1.5px);
-  transition: transform 1.8s cubic-bezier(.62, .02, .28, 1), opacity 1.8s ease;
-  animation: sway 7s ease-in-out infinite alternate;
+  /* while waiting: a breeze — the hem swings, the panel billows and the folds drift */
+  animation: breeze-r 5s ease-in-out infinite, folds 7s ease-in-out infinite alternate;
 }
-.curtain--right { right: 0; transform-origin: 100% 0; box-shadow: -10px 0 26px rgba(110, 125, 140, .16); }
-.curtain--left  { left: 0;  transform-origin: 0 0;    box-shadow: 10px 0 26px rgba(110, 125, 140, .16); animation-delay: -3.5s; background-position: 100% 0; }
-@keyframes sway {
-  from { rotate: -.35deg; }
-  to   { rotate: .35deg; }
+.curtain--right { right: -10%; transform-origin: 100% 0; box-shadow: -12px 0 30px rgba(110, 125, 140, .2); }
+.curtain--left  {
+  left: -10%;
+  transform-origin: 0 0;
+  box-shadow: 12px 0 30px rgba(110, 125, 140, .2);
+  background-position: 100% 0;
+  animation: breeze-l 5s ease-in-out -1.9s infinite, folds-l 7s ease-in-out -3s infinite alternate;
+}
+@keyframes breeze-r {
+  0%, 100% { transform: none; }
+  30%      { transform: skewX(-2.2deg) scaleX(.965); }
+  65%      { transform: skewX(1deg) scaleX(1.012); }
+}
+@keyframes breeze-l {
+  0%, 100% { transform: none; }
+  30%      { transform: skewX(2.2deg) scaleX(.965); }
+  65%      { transform: skewX(-1deg) scaleX(1.012); }
+}
+@keyframes folds   { to { background-position: 16% 0; } }
+@keyframes folds-l { to { background-position: 84% 0; } }
+
+/* on tap: the curtains gather inwards for a moment, then draw open to the sides */
+@keyframes open-r {
+  0%   { transform: none; }
+  18%  { transform: translateX(-6%) skewX(3deg) scaleX(1.03); animation-timing-function: cubic-bezier(.55, 0, .25, 1); }
+  100% { transform: translateX(100%) scaleX(.5); }
+}
+@keyframes open-l {
+  0%   { transform: none; }
+  18%  { transform: translateX(6%) skewX(-3deg) scaleX(1.03); animation-timing-function: cubic-bezier(.55, 0, .25, 1); }
+  100% { transform: translateX(-100%) scaleX(.5); }
 }
 
 .intro__content {
@@ -509,16 +474,12 @@ a { color: inherit; }
   background: radial-gradient(ellipse 60% 26% at 50% 50%, rgba(248, 249, 250, .85), rgba(248, 249, 250, 0) 100%);
   transition: opacity .6s ease, transform .6s ease;
 }
-.intro__kicker {
-  font-family: var(--font-ui);
-  word-spacing: var(--ui-gap);
-  font-size: 1.05rem;
-  letter-spacing: .05em;
-  color: var(--rose-brown);
-}
+/* the «و» sits exactly in the middle of the screen, a name on each side */
 .intro__names {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
+  width: 100%;
   gap: 18px;
   font-family: var(--font-script);
   font-weight: 700;
@@ -526,8 +487,16 @@ a { color: inherit; }
   line-height: 1.35;
   color: var(--copper);
 }
+.intro__names > :first-child { justify-self: end; }
+.intro__names > :last-child  { justify-self: start; }
 .intro__waw { height: 3.4rem; width: auto; }
-.intro__flourish { width: min(220px, 60vw); margin-top: 6px; }
+.intro__flourish {                       /* hangs under the names without moving them off-centre */
+  position: absolute;
+  top: calc(50% + clamp(2.3rem, 10vw, 3.1rem));
+  left: 50%;
+  translate: -50% 0;
+  width: min(220px, 60vw);
+}
 .intro__hint {
   position: absolute;
   bottom: max(9svh, 40px);
@@ -543,14 +512,14 @@ a { color: inherit; }
 
 /* opening */
 .intro.is-playing .intro__content { opacity: 0; transform: scale(.97); }
-.intro.is-playing .curtain { animation: none; }
-.intro.is-playing .curtain--right { transform: translateX(96%) scaleX(.55); }
-.intro.is-playing .curtain--left  { transform: translateX(-96%) scaleX(.55); }
+.intro.is-playing .curtain--right { animation: open-r 2.1s cubic-bezier(.4, 0, .6, 1) forwards; }
+.intro.is-playing .curtain--left  { animation: open-l 2.1s cubic-bezier(.4, 0, .6, 1) forwards; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .curtain { animation: none; transition: opacity .4s ease; }
-  .intro.is-playing .curtain { transform: none; opacity: 0; }
+  .curtain, .curtain--left { animation: none; transition: opacity .4s ease; }
+  .intro.is-playing .curtain--right,
+  .intro.is-playing .curtain--left { animation: none; opacity: 0; }
   .intro__hint { animation: none; }
   .js .card .c, .js .reveal { transition: none; filter: none; transform: none; }
 }

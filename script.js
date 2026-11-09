@@ -47,21 +47,6 @@
     });
   }
 
-  // Stretch a word with tatweel the way the design does («الأحـــد», «قاعـــة»):
-  // between the last pair of letters that can be joined.
-  var NON_JOINING = "اأإآدذرزوؤةىء";
-  var ARABIC_LETTER = /[ء-ي]/;
-  function stretch(word) {
-    if (word.indexOf("ـ") !== -1) return word;      // already stretched
-    for (var i = word.length - 1; i > 0; i--) {
-      var prev = word.charAt(i - 1), cur = word.charAt(i);
-      if (ARABIC_LETTER.test(prev) && ARABIC_LETTER.test(cur) && NON_JOINING.indexOf(prev) === -1) {
-        return word.slice(0, i) + "ـــ" + word.slice(i);
-      }
-    }
-    return word;
-  }
-
   /* ---------- fill content ---------- */
   var groomShort = W.groom.shortName || W.groom.name;
   var brideShort = W.bride.shortName || W.bride.name;
@@ -77,15 +62,9 @@
   setField("verseRef", W.verseRef);
   setList("intro", W.intro, "p");
   setField("hostsLabel", W.hostsLabel || "يتشـــرف");
-  setField("cardInvite", W.cardInvite);
-  setField("blessing", W.blessing);
 
-  // families: the «آل …» lines on the card …
+  // families: the parents' full names
   var fams = W.families || [];
-  setField("clansGroom", ((fams[0] && fams[0].clans) || []).join("\n"));
-  setField("clansBride", ((fams[1] && fams[1].clans) || []).join("\n"));
-
-  // … and the full names below the card
   document.querySelectorAll('[data-field="families"]').forEach(function (list) {
     list.textContent = "";
     fams.forEach(function (fam) {
@@ -116,12 +95,7 @@
     });
   });
 
-  // venue: two lines on the card, split at the first space («قاعة / الأفراح»)
-  var vName = W.venue.name || "";
-  var cut = vName.indexOf(" ");
-  setField("cardVenue1", stretch(cut > 0 ? vName.slice(0, cut) : vName));
-  setField("cardVenue2", cut > 0 ? vName.slice(cut + 1) : "");
-  setField("venueName", vName);
+  setField("venueName", W.venue.name || "");
   setField("venueDescription", W.venue.description || "");
   setField("venuePlace", [W.venue.city, W.venue.address].filter(Boolean).join(" — "));
 
@@ -133,7 +107,6 @@
 
   setField("closing", W.closing);
   setField("closingSub", W.closingSub);
-  setField("cardTimeLabel", stretch(W.timeLabel || "الاستقبال"));
 
   document.title = "دعوة زفاف " + groomShort + " و" + brideShort;
 
@@ -149,9 +122,7 @@
     var h = parseInt(p.hour, 10);
     var h12 = h % 12 === 0 ? 12 : h % 12;
 
-    setField("cardWeekday", stretch(weekday));
-    setField("cardDate", p.day + "." + p.month + "." + p.year);            // 11.12.2026
-    setField("cardTime", h12 + ":" + p.minute + " " + (h < 12 ? "AM" : "PM"));
+    setField("dateShort", p.day + "." + p.month + "." + p.year);           // 11.12.2026
     setField("weekdayDate", weekday + "، " + dateLong);
     setField("dateHijri", hijri);
     setField("timeLong", (W.timeLabel || "الاستقبال") + " الساعة " + h12 + ":" + p.minute + " " + (h < 12 ? "صباحًا" : "مساءً"));

@@ -36,55 +36,34 @@
   <link rel="preload" as="image" href="assets/card.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&family=Gulzar&display=swap" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/xb-shafigh-bold.woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
-  <script>document.documentElement.classList.add('js');</script>
+  <script>
+    document.documentElement.classList.add('js');
+    // always start at the top on (re)load, before anything is drawn,
+    // so the page never jumps when the curtains open
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+  </script>
 </head>
 <body class="is-locked">
 
-  <!-- Line icons (drawn after the design), reused below with <use> -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <symbol id="i-calendar" viewBox="0 0 48 48">
-      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="6" y="9" width="36" height="33" rx="5"/>
-        <path d="M6 18h36"/>
-        <path d="M15 5v8M21 5v8M27 5v8M33 5v8"/>
-      </g>
-      <g fill="currentColor">
-        <rect x="14" y="23" width="5" height="4" rx=".8"/><rect x="21.5" y="23" width="5" height="4" rx=".8"/><rect x="29" y="23" width="5" height="4" rx=".8"/>
-        <rect x="14" y="29.5" width="5" height="4" rx=".8"/><rect x="21.5" y="29.5" width="5" height="4" rx=".8"/><rect x="29" y="29.5" width="5" height="4" rx=".8"/>
-        <rect x="14" y="36" width="5" height="3" rx=".8"/><rect x="21.5" y="36" width="5" height="3" rx=".8"/><rect x="29" y="36" width="5" height="3" rx=".8"/>
-      </g>
-    </symbol>
-    <symbol id="i-pin" viewBox="0 0 48 48">
-      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round">
-        <path d="M24 44S10 28.5 10 18.5a14 14 0 0 1 28 0C38 28.5 24 44 24 44z"/>
-        <circle cx="24" cy="18.5" r="5.5"/>
-      </g>
-    </symbol>
-    <symbol id="i-clock" viewBox="0 0 48 48">
-      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
-        <circle cx="24" cy="24" r="19"/>
-        <path d="M24 24l-6-10M24 24l8 7"/>
-      </g>
-    </symbol>
-  </svg>
-
   <!-- soft watercolour wash behind everything (a blurred copy of the card art) -->
   <div class="wash" aria-hidden="true"></div>
+  <div class="glow" aria-hidden="true"></div>
 
   <!-- ===== Opening: sheer curtains that draw open ===== -->
-  <div class="intro" id="intro" role="button" tabindex="0" aria-label="افتح الدعوة" data-duration="1900">
+  <div class="intro" id="intro" role="button" tabindex="0" aria-label="افتح الدعوة" data-duration="2100">
     <div class="curtain curtain--right" aria-hidden="true"></div>
     <div class="curtain curtain--left" aria-hidden="true"></div>
     <div class="intro__content">
-      <small class="intro__kicker">دعوة زفاف</small>
       <p class="intro__names">
         <span data-field="groomName">خضر</span>
-        <img class="intro__waw" src="assets/waw.png" alt="و" width="130" height="336">
+        <img class="intro__waw" src="assets/waw.webp" alt="و" width="512" height="463">
         <span data-field="brideName">أمل</span>
       </p>
-      <img class="intro__flourish" src="assets/flourish.png" alt="" width="949" height="74">
+      <img class="intro__flourish" src="assets/flourish.svg" alt="" width="1890" height="139">
       <p class="intro__hint" data-video-hide>اضغط لفتح الدعوة</p>
     </div>
   </div>
@@ -96,54 +75,23 @@
          data-video-hide          → hidden in the video (buttons, tap hint) -->
   <main class="page">
 
-    <!-- The card: artwork from the design + live text placed exactly as in the design.
-         Positions are design pixels of the 720×1280 artwork (see styles.css). -->
+    <!-- The card: the Canva design rebuilt layer by layer (only the verse and the
+         opening words stay on it — names, families, date and venue are below).
+         Every piece has the box it has in the Canva document (left, top, width,
+         height and font size, in units of the 1080×1920 Canva page — see styles.css),
+         so the text sits exactly where the designer put it.
+         --i = order in which the pieces fade in after the curtains open. -->
     <header class="card" data-video-scene="card" data-video-hold="7000">
       <img class="card__art" src="assets/card.jpg" alt="" width="1440" height="2560" fetchpriority="high">
+      <img class="card__cloth" src="assets/cloth.webp" alt="" width="1463" height="763">
 
-      <p class="c c-verse" style="--i:0">
-        <span class="c-verse__text"><span class="c-verse__br">﴿</span><span data-field="verse"></span><span class="c-verse__br">﴾</span></span>
-        <small class="c-verse__ref" data-field="verseRef"></small>
-      </p>
+      <p class="t c t-verse" style="--l:290.87;--t:387.21;--w:524.25;--h:61.42;--fs:24.72;--lh:30.71;--i:0" data-field="verse"></p>
+      <p class="t c t-verse" style="--l:295.27;--t:432.61;--w:121.34;--h:16.03;--fs:14.03;--lh:16.03;--i:0" data-field="verseRef"></p>
 
-      <div class="c c-intro" style="--i:1" data-field="intro"></div>
+      <div class="t c t-intro" style="--l:210.55;--t:492.35;--w:690.77;--h:165.84;--fs:30.79;--lh:41.46;--i:1" data-field="intro"></div>
 
-      <p class="c c-label" style="--i:2" data-field="hostsLabel">يتشـــرف</p>
-
-      <p class="c c-clan c-clan--groom" style="--i:3" data-field="clansGroom"></p>
-      <p class="c c-clan-and" style="--i:3" aria-hidden="true">و</p>
-      <p class="c c-clan c-clan--bride" style="--i:3" data-field="clansBride"></p>
-
-      <p class="c c-invite" style="--i:4" data-field="cardInvite"></p>
-
-      <img class="c c-flourish c-flourish--top" style="--i:5" src="assets/flourish.png" alt="" width="949" height="74">
-      <h1 class="c-names">
-        <span class="c c-name c-name--groom" style="--i:5" data-field="groomName"></span>
-        <img class="c c-waw" style="--i:6" src="assets/waw.png" alt="و" width="130" height="336">
-        <span class="c c-name c-name--bride" style="--i:6" data-field="brideName"></span>
-      </h1>
-      <img class="c c-flourish c-flourish--bottom" style="--i:6" src="assets/flourish.png" alt="" width="949" height="74">
-
-      <p class="c c-blessing" style="--i:7" data-field="blessing"></p>
-
-      <!-- tapping an icon jumps to its section below -->
-      <a class="c c-info c-info--date" style="--i:8" href="#when">
-        <svg class="c-info__icon" aria-hidden="true"><use href="#i-calendar"/></svg>
-        <span class="c-info__top" data-field="cardWeekday"></span>
-        <span class="c-info__bottom c-info__num" data-field="cardDate"></span>
-      </a>
-      <a class="c c-info c-info--venue" style="--i:8" href="#where">
-        <svg class="c-info__icon" aria-hidden="true"><use href="#i-pin"/></svg>
-        <span class="c-info__top" data-field="cardVenue1"></span>
-        <span class="c-info__bottom" data-field="cardVenue2"></span>
-      </a>
-      <a class="c c-info c-info--time" style="--i:8" href="#countdown-section">
-        <svg class="c-info__icon" aria-hidden="true"><use href="#i-clock"/></svg>
-        <span class="c-info__top" data-field="cardTimeLabel"></span>
-        <span class="c-info__bottom c-info__num" data-field="cardTime"></span>
-      </a>
-
-      <p class="c c-closing" style="--i:9" data-field="closingSub"></p>
+      <!-- Canva lays a faint paper grain over the whole card, text included -->
+      <div class="card__grain" aria-hidden="true"></div>
     </header>
 
     <!-- ===== Below the card ===== -->
@@ -154,19 +102,19 @@
         <p class="s-label reveal" data-field="hostsLabel"></p>
         <ul class="hosts__list reveal" data-field="families"></ul>
         <p class="hosts__line reveal" data-field="invitationLine"></p>
-        <img class="flourish reveal" src="assets/flourish.png" alt="" width="949" height="74">
+        <img class="flourish reveal" src="assets/flourish.svg" alt="" width="1890" height="139">
         <div class="hosts__couple reveal">
           <p class="hosts__person"><small data-field="groomTitle"></small> <span data-field="groomFullName"></span></p>
-          <img class="hosts__waw" src="assets/waw.png" alt="و" width="130" height="336">
+          <img class="hosts__waw" src="assets/waw.webp" alt="و" width="512" height="463">
           <p class="hosts__person"><small data-field="brideTitle"></small> <span data-field="brideFullName"></span></p>
         </div>
-        <img class="flourish reveal" src="assets/flourish.png" alt="" width="949" height="74">
+        <img class="flourish reveal" src="assets/flourish.svg" alt="" width="1890" height="139">
       </section>
 
       <!-- Date -->
       <section class="section info" id="when" data-video-scene="date" data-video-hold="4000">
-        <svg class="info__icon reveal" aria-hidden="true"><use href="#i-calendar"/></svg>
-        <h2 class="s-title reveal">الموعـــد</h2>
+        <img class="info__icon reveal" src="assets/icon-calendar.svg" alt="" width="60" height="64">
+        <h2 class="s-title reveal">الموعد</h2>
         <p class="info__main reveal" data-field="weekdayDate"></p>
         <p class="info__meta reveal" data-field="dateHijri"></p>
         <p class="info__meta reveal" data-field="timeLong"></p>
@@ -178,8 +126,8 @@
 
       <!-- Venue -->
       <section class="section info" id="where" data-video-scene="venue" data-video-hold="4000">
-        <svg class="info__icon reveal" aria-hidden="true"><use href="#i-pin"/></svg>
-        <h2 class="s-title reveal">المكـــان</h2>
+        <img class="info__icon reveal" src="assets/icon-pin.svg" alt="" width="60" height="64">
+        <h2 class="s-title reveal">المكان</h2>
         <p class="info__main reveal" data-field="venueName"></p>
         <p class="info__meta reveal" data-field="venueDescription"></p>
         <p class="info__meta reveal" data-field="venuePlace"></p>
@@ -190,7 +138,7 @@
 
       <!-- Countdown -->
       <section class="section info countdown" id="countdown-section" aria-labelledby="cdTitle" data-video-scene="countdown" data-video-hold="4000">
-        <svg class="info__icon reveal" aria-hidden="true"><use href="#i-clock"/></svg>
+        <img class="info__icon reveal" src="assets/icon-clock.svg" alt="" width="60" height="64">
         <h2 class="s-title reveal" id="cdTitle">العدّ التنازلي</h2>
         <p class="info__meta reveal">حتى ليلة الفرح</p>
         <div class="countdown__grid reveal" id="countdown" role="timer" aria-live="off">
@@ -204,22 +152,22 @@
 
       <!-- Notes -->
       <section class="section notes" id="notesSection" data-video-scene="notes" data-video-hold="4500">
-        <h2 class="s-title reveal">ملاحظـــات</h2>
+        <h2 class="s-title reveal">ملاحظات</h2>
         <ul class="notes__list reveal" data-field="notes"></ul>
       </section>
 
       <!-- Closing -->
       <footer class="section closing" data-video-scene="closing" data-video-hold="4500">
-        <img class="flourish reveal" src="assets/flourish.png" alt="" width="949" height="74">
+        <img class="flourish reveal" src="assets/flourish.svg" alt="" width="1890" height="139">
         <p class="closing__big reveal" data-field="closing"></p>
         <p class="closing__sub reveal" data-field="closingSub"></p>
         <p class="closing__names reveal">
           <span data-field="groomName"></span>
-          <img class="closing__waw" src="assets/waw.png" alt="و" width="130" height="336">
+          <img class="closing__waw" src="assets/waw.webp" alt="و" width="512" height="463">
           <span data-field="brideName"></span>
         </p>
-        <p class="closing__date reveal" data-field="cardDate"></p>
-        <img class="flourish reveal" src="assets/flourish.png" alt="" width="949" height="74">
+        <p class="closing__date reveal" data-field="dateShort"></p>
+        <img class="flourish reveal" src="assets/flourish.svg" alt="" width="1890" height="139">
       </footer>
     </div>
   </main>
