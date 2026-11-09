@@ -1,10 +1,12 @@
 [
-  {"goto": "{SITE}/index.html", "wait": 3800, "shot": "1-opening"},
-  {"eval": "document.getElementById('intro').click()", "wait": 900, "shot": "2-smoke"},
-  {"wait": 1700},
-  {"eval": "document.querySelectorAll('.reveal').forEach(e=>e.classList.add('is-in')); window.scrollTo(0,0)", "wait": 1200, "shot": "3-hero"},
-  {"eval": "document.querySelector('.verse').scrollIntoView()", "wait": 500, "shot": "4-verse-families"},
-  {"eval": "document.querySelector('.countdown').scrollIntoView()", "wait": 500, "shot": "5-countdown"},
-  {"eval": "document.querySelectorAll('.card')[0].scrollIntoView()", "wait": 500, "shot": "6-date-venue"},
-  {"eval": "window.scrollTo(0, document.body.scrollHeight)", "wait": 1500, "shot": "7-closing"}
+  {"viewport": [390, 844, 2]},
+  {"goto": "{SITE}/index.html", "wait": 3000, "shot": "1-opening"},
+  {"eval": "document.getElementById('intro').click()", "wait": 700, "shot": "2-curtains"},
+  {"wait": 2600, "shot": "3-card"},
+  {"eval": "document.querySelector('.hosts').scrollIntoView()", "wait": 1300, "shot": "4-families"},
+  {"eval": "document.querySelector('#when').scrollIntoView()", "wait": 1300, "shot": "5-date-venue"},
+  {"eval": "document.querySelector('#countdown-section').scrollIntoView()", "wait": 1300, "shot": "6-countdown-notes"},
+  {"eval": "window.scrollTo(0, document.body.scrollHeight)", "wait": 1500, "shot": "7-closing"},
+  {"viewport": [1440, 900]},
+  {"eval": "window.scrollTo(0, 0)", "wait": 1200, "shot": "8-desktop"}
 ]

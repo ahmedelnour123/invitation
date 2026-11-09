@@ -1,13 +1,12 @@
 /* ============================================================
    بيانات الدعوة — عدّل هذا الملف فقط
    Wedding details — this is the only file you need to edit.
-   Everything in [square brackets] is a placeholder.
    ============================================================ */
 
 window.WEDDING = {
   /* ---------- العروسان | The couple ---------- */
-  // shortName = the big name on the opening and hero; name = full name under it.
-  // title = e.g. "م." or "د." shown above the name — leave "" for none.
+  // shortName = the big name on the card; name = full name (in the section below the card).
+  // title = e.g. "م." or "د." shown before the full name — leave "" for none.
   groom: {
     title: "",
     shortName: "خضر",
@@ -20,45 +19,58 @@ window.WEDDING = {
   },
 
   /* ---------- الأسر الداعية | Host families ---------- */
+  // clans  = the two lines on the card («آل …»)
+  // father / mother = the full names in the section below the card
   families: [
-    { // أهل العريس
+    { // أهل العريس (right column on the card)
+      clans: ["آل خضر", "آل محمد"],
       father: "صديق خضر علي حمد",
       mother: "حرم محمد أبوعشي ميدم"
     },
-    { // أهل العروس
+    { // أهل العروس (left column on the card)
+      clans: ["آل حمد السيد", "آل علي"],
       father: "جمعة حمدالسيد محمد جماعة",
       mother: "فطيمة علي محمد جماعة"
     }
   ],
 
   /* ---------- الموعد | Date & time ---------- */
-  // ISO format with Saudi offset (+03:00). Countdown, Hijri date and
-  // calendar links are all generated from this one value.
-  eventStart: "2027-01-14T20:00:00+03:00",   // [PLACEHOLDER DATE]
+  // ISO format with Saudi offset (+03:00). The weekday, dates, Hijri date,
+  // countdown and calendar links are all generated from this one value.
+  eventStart: "2026-12-11T21:00:00+03:00",   // الجمعة 11.12.2026 — 9:00 PM
   durationHours: 4,
   // Optional: if the auto-calculated Hijri date is off by a day, write
-  // the correct one here, e.g. "٥ شعبان ١٤٤٨ هـ". Leave "" for automatic.
+  // the correct one here, e.g. "1 رجب 1448 هـ". Leave "" for automatic.
   hijriOverride: "",
+  timeLabel: "الاستقبال",                     // the word above the time on the card
 
   /* ---------- المكان | Venue ---------- */
+  // On the card the name is split over two lines at the first space («قاعة / الأفراح»).
+  // Empty fields are hidden; the map button appears once mapUrl is filled in.
   venue: {
-    name: "[اسم القاعة]",
-    description: "[وصف قصير للقاعة — اختياري]",
-    city: "[المدينة]",
-    address: "[الحي — الشارع]",
-    mapUrl: "https://maps.google.com/?q=[ضع رابط الموقع هنا]"
+    name: "قاعة الأفراح",
+    description: "",
+    city: "",
+    address: "",
+    mapUrl: ""          // e.g. "https://maps.app.goo.gl/…"
   },
 
   /* ---------- النصوص | Text ---------- */
-  verse: "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً",
-  verseRef: "سورة الروم — ٢١",
+  // \n = new line. The «ـــ» stretches are part of the design.
+  verse: "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا\nوَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً",
+  verseRef: "سورة الروم: الآية ٢١",
 
   intro: [
-    "على بركة الله، وفي ليلةٍ نرجو أن تكون أولَ صفحةٍ في حكايةٍ طيّبة،",
-    "يجمع الله قلبين على المودّة والرحمة، ويسعدنا أن تكونوا معنا ونحن نحتفل بهذه البداية."
+    "على بركة الله، وفي ليلةٍ نرجو أن تكون",
+    "أولَ صفحةٍ في حكايـــةٍ طيّبـــة،",
+    "يجمع الله قلبين على المودّة والرحمة،",
+    "ويسعدنا أن تكونوا معنا ونحن نحتفل بهذه البداية."
   ],
 
-  invitationLine: "بدعوتكم لحضور حفل زفاف نجليهما وتناول طعام العشاء\nالعز بالأهل",
+  hostsLabel: "يتشـــرف",
+  cardInvite: "بدعوتكـم لحضـور زفـاف",       // short line on the card
+  invitationLine: "بدعوتكم لحضور حفل زفاف نجليهما وتناول طعام العشاء\nالعز بالأهل",  // full line below the card
+  blessing: "وذلك بمشيئة الله تعالى",
 
   notes: [
     "[ملاحظة ١ — مثال: الحفل للبالغين فقط]",

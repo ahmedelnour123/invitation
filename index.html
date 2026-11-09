@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#1D0A0E">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#EEF1F2">
 
   <title>دعوة زفاف خضر وأمل</title>
   <meta name="description" content="يسرّنا دعوتكم لحضور حفل زفاف خضر وأمل — حبابكم عشرة">
@@ -26,55 +26,65 @@
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="دعوة زفاف خضر وأمل — مبخرة يتصاعد منها دخان البخور على خلفية عنّابية">
+  <meta property="og:image:alt" content="دعوة زفاف خضر وأمل">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="دعوة زفاف خضر وأمل">
   <meta name="twitter:description" content="يسرّنا دعوتكم لحضور حفل زفاف خضر وأمل — حبابكم عشرة">
   <meta name="twitter:image" content="https://khidir-amal.ahmedelnour.com/og-image.jpg">
-  <meta name="twitter:image:alt" content="دعوة زفاف خضر وأمل — مبخرة يتصاعد منها دخان البخور على خلفية عنّابية">
+  <meta name="twitter:image:alt" content="دعوة زفاف خضر وأمل">
 
+  <link rel="preload" as="image" href="assets/card.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body class="is-locked">
 
-  <!-- Mabkhara drawing, reused below with <use> -->
+  <!-- Line icons (drawn after the design), reused below with <use> -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <symbol id="mabkhara" viewBox="0 0 100 90">
-      <g class="ember"><ellipse cx="50" cy="13" rx="22" ry="5" fill="#FF7A2F"/><ellipse cx="50" cy="12" rx="13" ry="3" fill="#FFC86B"/></g>
-      <path d="M18 14 H82 Q80 41 50 45 Q20 41 18 14Z" fill="#6B3324"/>
-      <ellipse cx="50" cy="14" rx="32" ry="4.5" fill="none" stroke="#4A2117" stroke-width="3"/>
-      <path d="M26 22 L32 28 L38 22 L44 28 L50 22 L56 28 L62 22 L68 28 L74 22" stroke="#D9BE86" stroke-width="1.4" fill="none"/>
-      <g fill="#D9BE86"><circle cx="35" cy="34" r="1.8"/><circle cx="50" cy="37" r="1.8"/><circle cx="65" cy="34" r="1.8"/></g>
-      <rect x="44" y="44" width="12" height="20" fill="#5B2B1E"/>
-      <path d="M26 82 Q50 56 74 82Z" fill="#6B3324"/>
-      <rect x="22" y="80" width="56" height="6" rx="3" fill="#4A2117"/>
+    <symbol id="i-calendar" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="6" y="9" width="36" height="33" rx="5"/>
+        <path d="M6 18h36"/>
+        <path d="M15 5v8M21 5v8M27 5v8M33 5v8"/>
+      </g>
+      <g fill="currentColor">
+        <rect x="14" y="23" width="5" height="4" rx=".8"/><rect x="21.5" y="23" width="5" height="4" rx=".8"/><rect x="29" y="23" width="5" height="4" rx=".8"/>
+        <rect x="14" y="29.5" width="5" height="4" rx=".8"/><rect x="21.5" y="29.5" width="5" height="4" rx=".8"/><rect x="29" y="29.5" width="5" height="4" rx=".8"/>
+        <rect x="14" y="36" width="5" height="3" rx=".8"/><rect x="21.5" y="36" width="5" height="3" rx=".8"/><rect x="29" y="36" width="5" height="3" rx=".8"/>
+      </g>
+    </symbol>
+    <symbol id="i-pin" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round">
+        <path d="M24 44S10 28.5 10 18.5a14 14 0 0 1 28 0C38 28.5 24 44 24 44z"/>
+        <circle cx="24" cy="18.5" r="5.5"/>
+      </g>
+    </symbol>
+    <symbol id="i-clock" viewBox="0 0 48 48">
+      <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+        <circle cx="24" cy="24" r="19"/>
+        <path d="M24 24l-6-10M24 24l8 7"/>
+      </g>
     </symbol>
   </svg>
 
-  <!-- ===== Opening: bakhoor smoke ===== -->
-  <div class="intro" id="intro" role="button" tabindex="0" aria-label="افتح الدعوة" data-duration="1400">
-    <div class="smk">
-      <div class="smk-text">
-        <small>دعوة زفاف</small>
-        <b data-field="groomName">خضر</b>
-        <i>&amp;</i>
-        <b data-field="brideName">أمل</b>
-      </div>
-      <span class="puff" style="--delay:0s;--dur:7.2s;--dx:-9"></span>
-      <span class="puff" style="--delay:.8s;--dur:6.6s;--dx:12"></span>
-      <span class="puff" style="--delay:1.6s;--dur:8.1s;--dx:-4"></span>
-      <span class="puff" style="--delay:2.4s;--dur:7.0s;--dx:15"></span>
-      <span class="puff" style="--delay:3.2s;--dur:7.8s;--dx:-14"></span>
-      <span class="puff" style="--delay:4s;--dur:6.9s;--dx:6"></span>
-      <span class="puff" style="--delay:4.8s;--dur:8.4s;--dx:-11"></span>
-      <span class="puff" style="--delay:5.6s;--dur:7.4s;--dx:9"></span>
-      <span class="puff" style="--delay:6.4s;--dur:6.8s;--dx:-2"></span>
-      <div class="mabkhara"><svg aria-hidden="true"><use href="#mabkhara"/></svg></div>
-      <div class="smk-fog"></div>
+  <!-- soft watercolour wash behind everything (a blurred copy of the card art) -->
+  <div class="wash" aria-hidden="true"></div>
+
+  <!-- ===== Opening: sheer curtains that draw open ===== -->
+  <div class="intro" id="intro" role="button" tabindex="0" aria-label="افتح الدعوة" data-duration="1900">
+    <div class="curtain curtain--right" aria-hidden="true"></div>
+    <div class="curtain curtain--left" aria-hidden="true"></div>
+    <div class="intro__content">
+      <small class="intro__kicker">دعوة زفاف</small>
+      <p class="intro__names">
+        <span data-field="groomName">خضر</span>
+        <img class="intro__waw" src="assets/waw.png" alt="و" width="130" height="336">
+        <span data-field="brideName">أمل</span>
+      </p>
+      <img class="intro__flourish" src="assets/flourish.png" alt="" width="949" height="74">
       <p class="intro__hint" data-video-hide>اضغط لفتح الدعوة</p>
     </div>
   </div>
@@ -85,126 +95,132 @@
          data-video-hold="ms"     → how long the scene stays on screen
          data-video-hide          → hidden in the video (buttons, tap hint) -->
   <main class="page">
-    <div class="paper">
-      <div class="band" aria-hidden="true"></div>
 
-      <!-- Hero -->
-      <header class="hero section" data-video-scene="hero" data-video-hold="4500">
-        <div class="hero__inner">
-          <p class="basmala reveal">بسم الله الرحمن الرحيم</p>
-          <p class="kicker reveal">دعوة حفل زفاف</p>
+    <!-- The card: artwork from the design + live text placed exactly as in the design.
+         Positions are design pixels of the 720×1280 artwork (see styles.css). -->
+    <header class="card" data-video-scene="card" data-video-hold="7000">
+      <img class="card__art" src="assets/card.jpg" alt="" width="1440" height="2560" fetchpriority="high">
 
-          <h1 class="couple reveal">
-            <span class="couple__person">
-              <small class="couple__title" data-field="groomTitle"></small>
-              <span class="couple__name" data-field="groomName"></span>
-              <span class="couple__full" data-field="groomFullName"></span>
-            </span>
-            <span class="couple__and" aria-label="و">
-              <svg viewBox="0 0 60 24" aria-hidden="true"><path d="M2 12h18M40 12h18" stroke="currentColor" stroke-width="1"/><path d="M30 3l6 9-6 9-6-9z" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="30" cy="12" r="2" fill="currentColor"/></svg>
-            </span>
-            <span class="couple__person">
-              <small class="couple__title" data-field="brideTitle"></small>
-              <span class="couple__name" data-field="brideName"></span>
-              <span class="couple__full" data-field="brideFullName"></span>
-            </span>
-          </h1>
+      <p class="c c-verse" style="--i:0">
+        <span class="c-verse__text"><span class="c-verse__br">﴿</span><span data-field="verse"></span><span class="c-verse__br">﴾</span></span>
+        <small class="c-verse__ref" data-field="verseRef"></small>
+      </p>
 
-          <p class="hero__date reveal">
-            <span data-field="dateLong">[التاريخ]</span>
-            <span class="hero__hijri" data-field="dateHijri">[التاريخ الهجري]</span>
-          </p>
+      <div class="c c-intro" style="--i:1" data-field="intro"></div>
 
-          <div class="censer reveal" aria-hidden="true">
-            <span class="wisp" style="--delay:0s;--dur:9s;--dx:-30px"></span>
-            <span class="wisp" style="--delay:2.2s;--dur:10s;--dx:26px"></span>
-            <span class="wisp" style="--delay:4.4s;--dur:9.5s;--dx:-8px"></span>
-            <span class="wisp" style="--delay:6.6s;--dur:10.5s;--dx:18px"></span>
-            <svg><use href="#mabkhara"/></svg>
-          </div>
-        </div>
-      </header>
+      <p class="c c-label" style="--i:2" data-field="hostsLabel">يتشـــرف</p>
 
-      <div class="divider" aria-hidden="true"></div>
+      <p class="c c-clan c-clan--groom" style="--i:3" data-field="clansGroom"></p>
+      <p class="c c-clan-and" style="--i:3" aria-hidden="true">و</p>
+      <p class="c c-clan c-clan--bride" style="--i:3" data-field="clansBride"></p>
 
-      <!-- Verse & intro -->
-      <section class="section verse" data-video-scene="verse" data-video-hold="5500">
-        <p class="verse__text reveal">﴿ <span data-field="verse"></span> ﴾</p>
-        <p class="verse__ref reveal" data-field="verseRef"></p>
-        <div class="intro-text reveal" data-field="intro"></div>
-      </section>
+      <p class="c c-invite" style="--i:4" data-field="cardInvite"></p>
 
-      <!-- Host families -->
+      <img class="c c-flourish c-flourish--top" style="--i:5" src="assets/flourish.png" alt="" width="949" height="74">
+      <h1 class="c-names">
+        <span class="c c-name c-name--groom" style="--i:5" data-field="groomName"></span>
+        <img class="c c-waw" style="--i:6" src="assets/waw.png" alt="و" width="130" height="336">
+        <span class="c c-name c-name--bride" style="--i:6" data-field="brideName"></span>
+      </h1>
+      <img class="c c-flourish c-flourish--bottom" style="--i:6" src="assets/flourish.png" alt="" width="949" height="74">
+
+      <p class="c c-blessing" style="--i:7" data-field="blessing"></p>
+
+      <!-- tapping an icon jumps to its section below -->
+      <a class="c c-info c-info--date" style="--i:8" href="#when">
+        <svg class="c-info__icon" aria-hidden="true"><use href="#i-calendar"/></svg>
+        <span class="c-info__top" data-field="cardWeekday"></span>
+        <span class="c-info__bottom c-info__num" data-field="cardDate"></span>
+      </a>
+      <a class="c c-info c-info--venue" style="--i:8" href="#where">
+        <svg class="c-info__icon" aria-hidden="true"><use href="#i-pin"/></svg>
+        <span class="c-info__top" data-field="cardVenue1"></span>
+        <span class="c-info__bottom" data-field="cardVenue2"></span>
+      </a>
+      <a class="c c-info c-info--time" style="--i:8" href="#countdown-section">
+        <svg class="c-info__icon" aria-hidden="true"><use href="#i-clock"/></svg>
+        <span class="c-info__top" data-field="cardTimeLabel"></span>
+        <span class="c-info__bottom c-info__num" data-field="cardTime"></span>
+      </a>
+
+      <p class="c c-closing" style="--i:9" data-field="closingSub"></p>
+    </header>
+
+    <!-- ===== Below the card ===== -->
+    <div class="more">
+
+      <!-- Host families (full names) -->
       <section class="section hosts" data-video-scene="families" data-video-hold="5500">
-        <h2 class="label reveal">يتشرّف</h2>
+        <p class="s-label reveal" data-field="hostsLabel"></p>
         <ul class="hosts__list reveal" data-field="families"></ul>
         <p class="hosts__line reveal" data-field="invitationLine"></p>
+        <img class="flourish reveal" src="assets/flourish.png" alt="" width="949" height="74">
+        <div class="hosts__couple reveal">
+          <p class="hosts__person"><small data-field="groomTitle"></small> <span data-field="groomFullName"></span></p>
+          <img class="hosts__waw" src="assets/waw.png" alt="و" width="130" height="336">
+          <p class="hosts__person"><small data-field="brideTitle"></small> <span data-field="brideFullName"></span></p>
+        </div>
+        <img class="flourish reveal" src="assets/flourish.png" alt="" width="949" height="74">
       </section>
 
-      <div class="divider" aria-hidden="true"></div>
+      <!-- Date -->
+      <section class="section info" id="when" data-video-scene="date" data-video-hold="4000">
+        <svg class="info__icon reveal" aria-hidden="true"><use href="#i-calendar"/></svg>
+        <h2 class="s-title reveal">الموعـــد</h2>
+        <p class="info__main reveal" data-field="weekdayDate"></p>
+        <p class="info__meta reveal" data-field="dateHijri"></p>
+        <p class="info__meta reveal" data-field="timeLong"></p>
+        <div class="actions reveal" data-video-hide>
+          <a class="btn" id="gcalBtn" href="#" target="_blank" rel="noopener">أضف إلى تقويم Google</a>
+          <button class="btn btn--ghost" id="icsBtn" type="button">أضف إلى تقويم الجوال</button>
+        </div>
+      </section>
 
-      <!-- Details -->
-      <section class="section details">
-        <article class="card reveal" data-video-scene="date" data-video-hold="4000">
-          <svg class="card__icon" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="7" width="22" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5 13h22M11 4v6M21 4v6" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
-          <h3 class="card__title">الموعد</h3>
-          <p class="card__main" data-field="weekdayDate">[اليوم والتاريخ]</p>
-          <p class="card__meta" data-field="dateHijri">[التاريخ الهجري]</p>
-          <p class="card__meta" data-field="time">[الساعة]</p>
-          <div class="card__actions" data-video-hide>
-            <a class="btn" id="gcalBtn" href="#" target="_blank" rel="noopener">أضف إلى تقويم Google</a>
-            <button class="btn btn--ghost" id="icsBtn" type="button">أضف إلى تقويم الجوال</button>
-          </div>
-        </article>
-
-        <article class="card reveal" data-video-scene="venue" data-video-hold="4000">
-          <svg class="card__icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 29s9-8.5 9-15a9 9 0 0 0-18 0c0 6.5 9 15 9 15z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="16" cy="14" r="3.2" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
-          <h3 class="card__title">المكان</h3>
-          <p class="card__main" data-field="venueName">[اسم القاعة]</p>
-          <p class="card__meta" data-field="venueDescription"></p>
-          <p class="card__meta"><span data-field="venueCity">[المدينة]</span> — <span data-field="venueAddress">[العنوان]</span></p>
-          <div class="card__actions" data-video-hide>
-            <a class="btn" id="mapBtn" href="#" target="_blank" rel="noopener">عرض الموقع على الخريطة</a>
-          </div>
-        </article>
+      <!-- Venue -->
+      <section class="section info" id="where" data-video-scene="venue" data-video-hold="4000">
+        <svg class="info__icon reveal" aria-hidden="true"><use href="#i-pin"/></svg>
+        <h2 class="s-title reveal">المكـــان</h2>
+        <p class="info__main reveal" data-field="venueName"></p>
+        <p class="info__meta reveal" data-field="venueDescription"></p>
+        <p class="info__meta reveal" data-field="venuePlace"></p>
+        <div class="actions reveal" data-video-hide>
+          <a class="btn" id="mapBtn" href="#" target="_blank" rel="noopener">عرض الموقع على الخريطة</a>
+        </div>
       </section>
 
       <!-- Countdown -->
-      <section class="section countdown" aria-labelledby="cdTitle" data-video-scene="countdown" data-video-hold="4000">
-        <h2 class="label reveal" id="cdTitle">العدّ التنازلي</h2>
-        <p class="countdown__sub reveal">حتى ليلة الفرح</p>
+      <section class="section info countdown" id="countdown-section" aria-labelledby="cdTitle" data-video-scene="countdown" data-video-hold="4000">
+        <svg class="info__icon reveal" aria-hidden="true"><use href="#i-clock"/></svg>
+        <h2 class="s-title reveal" id="cdTitle">العدّ التنازلي</h2>
+        <p class="info__meta reveal">حتى ليلة الفرح</p>
         <div class="countdown__grid reveal" id="countdown" role="timer" aria-live="off">
-          <div class="cd"><span class="cd__num" data-cd="days">٠</span><span class="cd__unit">يوم</span></div>
-          <div class="cd"><span class="cd__num" data-cd="hours">٠</span><span class="cd__unit">ساعة</span></div>
-          <div class="cd"><span class="cd__num" data-cd="minutes">٠</span><span class="cd__unit">دقيقة</span></div>
-          <div class="cd"><span class="cd__num" data-cd="seconds">٠</span><span class="cd__unit">ثانية</span></div>
+          <div class="cd"><span class="cd__num" data-cd="days">0</span><span class="cd__unit">يوم</span></div>
+          <div class="cd"><span class="cd__num" data-cd="hours">0</span><span class="cd__unit">ساعة</span></div>
+          <div class="cd"><span class="cd__num" data-cd="minutes">0</span><span class="cd__unit">دقيقة</span></div>
+          <div class="cd"><span class="cd__num" data-cd="seconds">0</span><span class="cd__unit">ثانية</span></div>
         </div>
         <p class="countdown__done" id="countdownDone" hidden></p>
       </section>
 
       <!-- Notes -->
       <section class="section notes" id="notesSection" data-video-scene="notes" data-video-hold="4500">
-        <div class="note reveal">
-          <h2 class="label">ملاحظات</h2>
-          <ul class="note__list" data-field="notes"></ul>
-        </div>
+        <h2 class="s-title reveal">ملاحظـــات</h2>
+        <ul class="notes__list reveal" data-field="notes"></ul>
       </section>
 
       <!-- Closing -->
       <footer class="section closing" data-video-scene="closing" data-video-hold="4500">
+        <img class="flourish reveal" src="assets/flourish.png" alt="" width="949" height="74">
         <p class="closing__big reveal" data-field="closing"></p>
         <p class="closing__sub reveal" data-field="closingSub"></p>
-        <p class="closing__names reveal"><span data-field="groomName"></span> <span class="amp">&amp;</span> <span data-field="brideName"></span></p>
-        <p class="closing__date reveal" data-field="dateShort"></p>
-        <div class="censer reveal" aria-hidden="true">
-          <span class="wisp" style="--delay:1s;--dur:9s;--dx:22px"></span>
-          <span class="wisp" style="--delay:3.4s;--dur:10s;--dx:-24px"></span>
-          <span class="wisp" style="--delay:5.8s;--dur:9.5s;--dx:6px"></span>
-          <svg><use href="#mabkhara"/></svg>
-        </div>
+        <p class="closing__names reveal">
+          <span data-field="groomName"></span>
+          <img class="closing__waw" src="assets/waw.png" alt="و" width="130" height="336">
+          <span data-field="brideName"></span>
+        </p>
+        <p class="closing__date reveal" data-field="cardDate"></p>
+        <img class="flourish reveal" src="assets/flourish.png" alt="" width="949" height="74">
       </footer>
-
-      <div class="band band--bottom" aria-hidden="true"></div>
     </div>
   </main>
 

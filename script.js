@@ -1,8 +1,8 @@
 /* ============================================================
    Wedding invitation — behaviour
-   Fills index.html from config.js, runs the bakhoor smoke opening
-   (#intro, length in data-duration), countdown,
-   calendar buttons and scroll reveal. No libraries.
+   Fills index.html from config.js, runs the curtain opening
+   (#intro, length in data-duration), countdown, calendar
+   buttons and scroll reveal. No libraries.
    ============================================================ */
 (function () {
   "use strict";
@@ -16,11 +16,9 @@
   var validDate = !isNaN(start.getTime());
 
   /* ---------- helpers ---------- */
-  var arNum = new Intl.NumberFormat("ar-SA-u-nu-arab", { useGrouping: false });
-  function ar(n) { return arNum.format(n); }
-
+  // the design writes numbers with Latin digits (12.12.2026, 9:00 PM)
   function fmt(opts, calendar) {
-    return new Intl.DateTimeFormat("ar-SA-u-ca-" + calendar + "-nu-arab",
+    return new Intl.DateTimeFormat("ar-SA-u-ca-" + calendar + "-nu-latn",
       Object.assign({ timeZone: TZ }, opts)).format(start);
   }
 
@@ -49,6 +47,21 @@
     });
   }
 
+  // Stretch a word with tatweel the way the design does («الأحـــد», «قاعـــة»):
+  // between the last pair of letters that can be joined.
+  var NON_JOINING = "اأإآدذرزوؤةىء";
+  var ARABIC_LETTER = /[ء-ي]/;
+  function stretch(word) {
+    if (word.indexOf("ـ") !== -1) return word;      // already stretched
+    for (var i = word.length - 1; i > 0; i--) {
+      var prev = word.charAt(i - 1), cur = word.charAt(i);
+      if (ARABIC_LETTER.test(prev) && ARABIC_LETTER.test(cur) && NON_JOINING.indexOf(prev) === -1) {
+        return word.slice(0, i) + "ـــ" + word.slice(i);
+      }
+    }
+    return word;
+  }
+
   /* ---------- fill content ---------- */
   var groomShort = W.groom.shortName || W.groom.name;
   var brideShort = W.bride.shortName || W.bride.name;
@@ -63,34 +76,54 @@
   setField("verse", W.verse);
   setField("verseRef", W.verseRef);
   setList("intro", W.intro, "p");
-  setField("invitationLine", W.invitationLine);
+  setField("hostsLabel", W.hostsLabel || "يتشـــرف");
+  setField("cardInvite", W.cardInvite);
+  setField("blessing", W.blessing);
 
-  // families: [{ father, mother }, ...] — plain strings are also accepted
+  // families: the «آل …» lines on the card …
+  var fams = W.families || [];
+  setField("clansGroom", ((fams[0] && fams[0].clans) || []).join("\n"));
+  setField("clansBride", ((fams[1] && fams[1].clans) || []).join("\n"));
+
+  // … and the full names below the card
   document.querySelectorAll('[data-field="families"]').forEach(function (list) {
     list.textContent = "";
-    (W.families || []).forEach(function (fam) {
+    fams.forEach(function (fam) {
       var li = document.createElement("li");
       li.className = "hosts__family";
-      if (typeof fam === "string") {
-        li.textContent = fam;
-      } else {
-        [["hosts__father", fam.father], ["hosts__and", fam.father && fam.mother ? "و" : ""], ["hosts__mother", fam.mother]]
-          .forEach(function (part) {
-            if (!part[1]) return;
-            var span = document.createElement("span");
-            span.className = part[0];
-            span.textContent = part[1];
-            li.appendChild(span);
-          });
-      }
+      [["hosts__father", fam.father], ["hosts__and", fam.father && fam.mother ? "و" : ""], ["hosts__mother", fam.mother]]
+        .forEach(function (part) {
+          if (!part[1]) return;
+          var span = document.createElement("span");
+          span.className = part[0];
+          span.textContent = part[1];
+          li.appendChild(span);
+        });
       list.appendChild(li);
     });
   });
 
-  setField("venueName", W.venue.name);
+  // invitation line: the last line (e.g. «العز بالأهل») is shown as a motto
+  document.querySelectorAll('[data-field="invitationLine"]').forEach(function (el) {
+    var lines = String(W.invitationLine || "").split("\n");
+    el.textContent = "";
+    lines.forEach(function (line, i) {
+      var span = document.createElement("span");
+      if (lines.length > 1 && i === lines.length - 1) span.className = "hosts__motto";
+      else if (i > 0) el.appendChild(document.createElement("br"));
+      span.textContent = line;
+      el.appendChild(span);
+    });
+  });
+
+  // venue: two lines on the card, split at the first space («قاعة / الأفراح»)
+  var vName = W.venue.name || "";
+  var cut = vName.indexOf(" ");
+  setField("cardVenue1", stretch(cut > 0 ? vName.slice(0, cut) : vName));
+  setField("cardVenue2", cut > 0 ? vName.slice(cut + 1) : "");
+  setField("venueName", vName);
   setField("venueDescription", W.venue.description || "");
-  setField("venueCity", W.venue.city);
-  setField("venueAddress", W.venue.address);
+  setField("venuePlace", [W.venue.city, W.venue.address].filter(Boolean).join(" — "));
 
   if (W.notes && W.notes.length) {
     setList("notes", W.notes, "li");
@@ -100,28 +133,28 @@
 
   setField("closing", W.closing);
   setField("closingSub", W.closingSub);
+  setField("cardTimeLabel", stretch(W.timeLabel || "الاستقبال"));
 
   document.title = "دعوة زفاف " + groomShort + " و" + brideShort;
 
   /* ---------- dates (Gregorian + Hijri, Saudi time) ---------- */
   if (validDate) {
-    var dateLong = fmt({ day: "numeric", month: "long", year: "numeric" }, "gregory");
     var weekday = fmt({ weekday: "long" }, "gregory");
+    var dateLong = fmt({ day: "numeric", month: "long", year: "numeric" }, "gregory");
     var hijri = W.hijriOverride ||
       fmt({ day: "numeric", month: "long", year: "numeric" }, "islamic-umalqura");
     if (hijri.indexOf("هـ") === -1) hijri += " هـ";
 
-    var p = partsLatn({ hour: "numeric", minute: "2-digit", day: "numeric", month: "numeric", year: "numeric" });
+    var p = partsLatn({ hour: "numeric", minute: "2-digit", day: "2-digit", month: "2-digit", year: "numeric" });
     var h = parseInt(p.hour, 10);
     var h12 = h % 12 === 0 ? 12 : h % 12;
-    var period = h < 12 ? "صباحًا" : "مساءً";
-    var time = "الساعة " + ar(h12) + ":" + ar(p.minute.charAt(0)) + ar(p.minute.charAt(1)) + " " + period;
 
-    setField("dateLong", dateLong);
-    setField("dateHijri", hijri);
+    setField("cardWeekday", stretch(weekday));
+    setField("cardDate", p.day + "." + p.month + "." + p.year);            // 11.12.2026
+    setField("cardTime", h12 + ":" + p.minute + " " + (h < 12 ? "AM" : "PM"));
     setField("weekdayDate", weekday + "، " + dateLong);
-    setField("time", time);
-    setField("dateShort", ar(p.day) + "/" + ar(p.month) + "/" + ar(p.year));
+    setField("dateHijri", hijri);
+    setField("timeLong", (W.timeLabel || "الاستقبال") + " الساعة " + h12 + ":" + p.minute + " " + (h < 12 ? "صباحًا" : "مساءً"));
   }
 
   /* ---------- map ---------- */
@@ -131,6 +164,7 @@
   /* ---------- calendar ---------- */
   var eventTitle = "حفل زفاف " + groomShort + " و" + brideShort;
   var location = [W.venue.name, W.venue.address, W.venue.city].filter(Boolean).join("، ");
+  var details = String(W.invitationLine || "").replace(/\n/g, " — ") + (W.venue.mapUrl ? "\n" + W.venue.mapUrl : "");
 
   function utcStamp(d) {
     return d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
@@ -143,7 +177,7 @@
     gcalBtn.href = "https://calendar.google.com/calendar/render?action=TEMPLATE" +
       "&text=" + encodeURIComponent(eventTitle) +
       "&dates=" + utcStamp(start) + "/" + utcStamp(end) +
-      "&details=" + encodeURIComponent(W.invitationLine + (W.venue.mapUrl ? "\n" + W.venue.mapUrl : "")) +
+      "&details=" + encodeURIComponent(details) +
       "&location=" + encodeURIComponent(location) +
       "&ctz=" + TZ;
 
@@ -162,7 +196,7 @@
         "DTEND:" + utcStamp(end),
         "SUMMARY:" + esc(eventTitle),
         "LOCATION:" + esc(location),
-        "DESCRIPTION:" + esc(W.invitationLine + (W.venue.mapUrl ? "\n" + W.venue.mapUrl : "")),
+        "DESCRIPTION:" + esc(details),
         "BEGIN:VALARM",
         "TRIGGER:-P1D",
         "ACTION:DISPLAY",
@@ -214,7 +248,7 @@
       seconds: s % 60
     };
     Object.keys(vals).forEach(function (k) {
-      var txt = ar(vals[k]);
+      var txt = String(vals[k]);
       if (cells[k].textContent !== txt) cells[k].textContent = txt;
     });
   }
@@ -226,24 +260,28 @@
     document.querySelector(".countdown").hidden = true;
   }
 
-  /* ---------- opening (each page has its own #intro) ---------- */
+  /* ---------- opening: the curtains draw open ---------- */
   var intro = document.getElementById("intro");
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var opened = false;
 
+  function showCard() { document.body.classList.add("is-open"); }
+
   function openInvite() {
     if (opened) return;
     opened = true;
-    if (!intro) { document.body.classList.remove("is-locked"); startReveal(); return; }
-    var duration = parseInt(intro.getAttribute("data-duration"), 10) || 2000;
+    if (!intro) { showCard(); document.body.classList.remove("is-locked"); startReveal(); return; }
+    var duration = reduced ? 400 : (parseInt(intro.getAttribute("data-duration"), 10) || 1900);
     intro.classList.add("is-playing");
+    window.scrollTo(0, 0);
+    // the card's text starts appearing while the curtains are still moving
+    setTimeout(showCard, duration * 0.45);
     setTimeout(function () {
       intro.classList.add("is-gone");
       intro.setAttribute("aria-hidden", "true");
       document.body.classList.remove("is-locked");
-      window.scrollTo(0, 0);
       startReveal();
-    }, reduced ? 200 : duration);
+    }, duration);
   }
   if (intro) {
     intro.addEventListener("click", openInvite);

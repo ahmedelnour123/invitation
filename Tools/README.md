@@ -5,6 +5,7 @@ needed by the website itself.
 
 | File | What it does |
 |---|---|
+| `design/make_assets.py` | Cuts the site artwork out of the flat design image `design/reference.jpg` → `assets/` (card art with the text painted out, flourish, «و», paper texture) |
 | `make-video.mjs` | Records the portrait 1080×1920 video of the site → `video/invitation-vN.mp4` (next free number) |
 | `video/storyboard.js` | Scene order and timing: smoke opening → each marked part of the page alone → QR scene |
 | `video/video-mode.css` | Look of the video: one fixed background with the strips, one scene at a time, fades |
@@ -21,7 +22,7 @@ needed by the website itself.
 - **Node.js 22+** (uses the built-in `WebSocket`)
 - **Microsoft Edge or Google Chrome** (found automatically; or set `BROWSER=<path>`)
 - **ffmpeg** on PATH (only for the video; or set `FFMPEG=<path>`)
-- **Python 3** with the packages in `requirements.txt` (only for the QR scripts)
+- **Python 3** with the packages in `requirements.txt` (for the QR and artwork scripts)
 - **Internet**, for the Google Fonts used in the designs
 
 One-time Python setup, run from the project folder:
@@ -39,6 +40,19 @@ Tools/.venv/Scripts/python -m pip install -r Tools/requirements.txt
 ## Recipes
 
 Run these from the project folder.
+
+**Site artwork** → `assets/card.jpg`, `flourish.png`, `waw.png`, `paper.jpg`
+(re-run only if `design/reference.jpg` changes; add `--debug <folder>` to also
+save the text mask and a before/after image). When the designer's layered files
+arrive they replace these files directly, and this step is no longer needed:
+
+```bash
+Tools/.venv/Scripts/python Tools/design/make_assets.py
+```
+
+The text boxes it paints out are listed at the top of the script, in pixels of
+the 720×1280 design. `assets/curtain.svg` (the opening's fabric) is hand-made,
+not generated.
 
 **Video** → `video/invitation-vN.mp4` (1080×1920, 30 fps, no sound). Each run
 saves the next version number (v3, v4, …) so earlier videos are kept. Re-run

@@ -4,7 +4,7 @@
 // usage:  node Tools/cdp-shots.mjs <outDir> <plan.json>
 //
 // Plan = JSON array of steps, run in order:
-//   {"viewport": [w, h]}          set page size (default 390×844, phone)
+//   {"viewport": [w, h, scale]}   set page size (default 390×844, phone; scale = pixel ratio, default 1)
 //   {"transparent": true}         transparent page background (for PNGs)
 //   {"goto": url, "wait": ms}     open a page and wait
 //   {"goto": url, "wait": ms, "shot": "name"}   open, wait, then screenshot
@@ -93,7 +93,7 @@ for (const step of plan) {
     continue;
   }
   if (step.viewport) {
-    await send("Emulation.setDeviceMetricsOverride", { width: step.viewport[0], height: step.viewport[1], deviceScaleFactor: 1, mobile: false });
+    await send("Emulation.setDeviceMetricsOverride", { width: step.viewport[0], height: step.viewport[1], deviceScaleFactor: step.viewport[2] || 1, mobile: step.viewport[0] < 600 });
     continue;
   }
   if (step.goto) {
