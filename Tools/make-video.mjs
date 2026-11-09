@@ -1,9 +1,9 @@
 // Records a portrait 1080×1920 video of the invitation website.
 // It opens the site in headless Edge/Chrome at phone size and switches it to
-// "video mode" (Tools/video/video-mode.css): one fixed frame (the first page's
-// art and pillars), and each part of the page marked data-video-scene shown
-// alone inside the arch, fading from one to the next (Tools/video/storyboard.js). It starts
-// with the curtains opening and ends with a QR scene, then encodes an MP4 with ffmpeg.
+// "video mode" (Tools/video/video-mode.css), then plays Tools/video/storyboard.js:
+// the cover's decorations draw themselves in (pieces from Tools/video/layers/),
+// the text appears line by line, the page changes to the grass and cloth, the
+// details build up line by line, and it ends on a QR page. Then ffmpeg encodes an MP4.
 //
 // The page's clock is controlled: time is paused, moved forward exactly one
 // frame (1/fps s), a full-resolution screenshot is taken, and so on. Every
@@ -133,9 +133,13 @@ await evaluate("document.fonts.ready");
 const storyboard = readFileSync(join(TOOLS, "video", "storyboard.js"), "utf8");
 const css = readFileSync(join(TOOLS, "video", "video-mode.css"), "utf8");
 await evaluate(storyboard);
-const sceneNames = await evaluate(`window.__video.setup(${JSON.stringify(css)}).then(() =>
-  [...document.querySelectorAll("[data-video-scene]")].filter(el => !el.closest("[hidden]")).map(el => el.dataset.videoScene))`);
-console.log("Scenes:", ["opening", ...sceneNames].join(" → "));
+// the cover's decoration pieces, handed to the page as data URLs (works for any --site)
+const layersDir = join(TOOLS, "video", "layers");
+const boxes = JSON.parse(readFileSync(join(layersDir, "layers.json"), "utf8"));
+const layerSrc = Object.fromEntries(Object.keys(boxes).map((k) =>
+  [k, "data:image/webp;base64," + readFileSync(join(layersDir, `${k}.webp`)).toString("base64")]));
+const sceneNames = await evaluate(`window.__video.setup(${JSON.stringify(css)}, ${JSON.stringify({ boxes, src: layerSrc })})`);
+console.log("Scenes:", sceneNames.join(" → "));
 await sleep(600);
 
 /* ---------- play the storyboard frame by frame ---------- */

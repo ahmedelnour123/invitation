@@ -64,16 +64,13 @@
         <span data-field="brideName">أمل</span>
       </p>
       <img class="intro__flourish" src="assets/flourish.svg" alt="" width="1890" height="139">
-      <p class="intro__hint" data-video-hide>اضغط لفتح الدعوة</p>
+      <p class="intro__hint">اضغط لفتح الدعوة</p>
     </div>
   </div>
 
   <!-- ===== Invitation =====
-       Video attributes (used only by Tools/make-video.mjs, no effect on the site):
-         data-video-scene="name"  → shown alone as one scene, in page order
-         data-video-hold="ms"     → how long the scene stays on screen
-         data-video-hide          → hidden in the video (buttons, map, tap hint, scroll cue)
-       The countdown is left out of the video on purpose (it would be out of date). -->
+       (Tools/make-video.mjs turns this page into the video; it reads the text
+        from here, so nothing in this file needs changing for the video.) -->
   <main class="page">
 
     <!-- First page: the top of the Canva design (chandelier, flowers, curtains,
@@ -85,7 +82,7 @@
          ::before/::after); the last page ends with the grass and cloth (.ground). -->
     <header class="card">
       <img class="card__art" src="assets/top.webp" alt="" width="1440" height="1547" fetchpriority="high">
-      <div class="card__text" data-video-scene="first" data-video-hold="7000">
+      <div class="card__text">
       <!-- the verse, large, in the open sky under the chandelier -->
       <div class="card__verse c" style="--i:0">
         <p class="card__verse-text" data-field="verse"></p>
@@ -105,7 +102,7 @@
         <p class="card__date c" style="--i:6"><span data-field="weekday"></span><span class="num" data-field="dateShort"></span></p>
       </div>
       </div>
-      <a class="scroll-cue c" style="--i:7" href="#hosts" aria-label="تابع القراءة" data-video-hide>
+      <a class="scroll-cue c" style="--i:7" href="#hosts" aria-label="تابع القراءة">
         <svg viewBox="0 0 48 30" aria-hidden="true"><path d="M4 4l20 20L44 4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </header>
@@ -114,7 +111,7 @@
     <div class="more">
 
       <!-- Host families (full names) -->
-      <section class="section hosts" id="hosts" data-video-scene="families" data-video-hold="5500">
+      <section class="section hosts" id="hosts">
         <p class="s-label reveal" data-field="hostsLabel"></p>
         <ul class="hosts__list reveal" data-field="families"></ul>
         <p class="hosts__line reveal" data-field="invitationLine"></p>
@@ -128,29 +125,29 @@
       </section>
 
       <!-- Date -->
-      <section class="section info" id="when" data-video-scene="date" data-video-hold="4000">
+      <section class="section info" id="when">
         <img class="info__icon reveal" src="assets/icon-calendar.svg" alt="" width="60" height="64">
         <h2 class="s-title reveal">الموعد</h2>
         <p class="info__main reveal" data-field="weekdayDate"></p>
         <p class="info__meta reveal" data-field="dateHijri"></p>
         <p class="info__meta reveal" data-field="timeLong"></p>
-        <div class="actions reveal" data-video-hide>
+        <div class="actions reveal">
           <a class="btn" id="gcalBtn" href="#" target="_blank" rel="noopener">أضف إلى تقويم Google</a>
           <button class="btn btn--ghost" id="icsBtn" type="button">أضف إلى تقويم الجوال</button>
         </div>
       </section>
 
       <!-- Venue -->
-      <section class="section info" id="where" data-video-scene="venue" data-video-hold="4000">
+      <section class="section info" id="where">
         <img class="info__icon reveal" src="assets/icon-pin.svg" alt="" width="60" height="64">
         <h2 class="s-title reveal">المكان</h2>
         <p class="info__main reveal" data-field="venueName"></p>
         <p class="info__meta reveal" data-field="venueDescription"></p>
         <p class="info__meta reveal" data-field="venuePlace"></p>
-        <div class="map reveal" id="mapBox" data-video-hide>
+        <div class="map reveal" id="mapBox">
           <iframe title="موقع القاعة على الخريطة" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
         </div>
-        <div class="actions reveal" data-video-hide>
+        <div class="actions reveal">
           <a class="btn" id="mapBtn" href="#" target="_blank" rel="noopener">عرض الموقع على الخريطة</a>
         </div>
       </section>
@@ -170,13 +167,13 @@
       </section>
 
       <!-- Notes -->
-      <section class="section notes" id="notesSection" data-video-scene="notes" data-video-hold="4500">
+      <section class="section notes" id="notesSection">
         <h2 class="s-title reveal">ملاحظات</h2>
         <ul class="notes__list reveal" data-field="notes"></ul>
       </section>
 
       <!-- Closing -->
-      <footer class="section closing" data-video-scene="closing" data-video-hold="4500">
+      <footer class="section closing">
         <img class="flourish reveal" src="assets/flourish.svg" alt="" width="1890" height="139">
         <p class="closing__big reveal" data-field="closing"></p>
         <p class="closing__sub reveal" data-field="closingSub"></p>
@@ -199,7 +196,7 @@
   </main>
 
   <!-- background music on/off (shown once the invitation is opened; see config.js → music) -->
-  <button class="music-toggle" id="musicToggle" type="button" aria-pressed="true" aria-label="إيقاف الموسيقى" hidden data-video-hide>
+  <button class="music-toggle" id="musicToggle" type="button" aria-pressed="true" aria-label="إيقاف الموسيقى" hidden>
     <svg class="music-toggle__on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
     <svg class="music-toggle__off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M15.5 9.5l5 5M20.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
   </button>

@@ -8,8 +8,9 @@ needed by the website itself.
 | `design/build_from_canva.py` | Builds the site artwork from the Canva design's own layers in `design/canva/` → `assets/` (card art, cloth, paper grain, «و», flourish and icons) |
 | `make-audio.mjs` | Turns any audio/video file into the site's background music → `assets/audio/NAME.webm` (Opus) + `NAME.m4a` (AAC) |
 | `make-video.mjs` | Records the portrait 1080×1920 video of the site → `video/invitation-vN.mp4` (next free number) |
-| `video/storyboard.js` | Scene order and timing: curtains opening → first page → each marked part of the page alone → closing with the grass and cloth → QR scene |
-| `video/video-mode.css` | Look of the video: the first page's art and pillars as one fixed frame, one scene at a time inside the arch, fades |
+| `video/storyboard.js` | The video's animation and timing: decorations drawing in → cover text line by line → change to the grass and cloth → details line by line → QR |
+| `video/video-mode.css` | Look of the video: the cover's pieces, the second page's frame, the details and QR pages |
+| `video/layers/` | The cover's art in separate pieces (flowers, curtains, chandelier, paper grain) for the video's opening |
 | `cdp-shots.mjs` | Opens pages in headless Edge/Chrome and saves screenshots, following a plan file in `plans/` |
 | `make_qr.py` | Creates the styled QR code SVG (rounded dots, rounded corner eyes, incense-burner emblem) |
 | `verify_qr.py` | Confirms the QR images really scan (full size, shrunk, grayscale) and the background slot is empty |
@@ -72,6 +73,8 @@ node Tools/make-audio.mjs path/to/song.mp3
 Then set `music.src` in `config.js` to the printed path (without the
 extension). Options: `--name`, `--start`/`--end` (seconds, to use part of a
 song), `--loudness -20` (quieter), `--mono` (about half the size), `--fade 0`.
+The music plays only on the link with `?m` (e.g. `https://khidir-amal.ahmedelnour.com/?m`);
+the plain link is silent, with no music button and no audio download.
 
 **Video** → `video/invitation-vN.mp4` (1080×1920, 30 fps, no sound). Each run
 saves the next version number (v3, v4, …) so earlier videos are kept. Re-run
@@ -88,28 +91,26 @@ Or record the live site, or choose another output file:
 node Tools/make-video.mjs --site https://khidir-amal.ahmedelnour.com --out video/final.mp4
 ```
 
-How it works: the page opens in "video mode" — the first page's art
-(chandelier, flowers, curtains) with the pillars down to the bottom of the
-screen stays as one fixed frame, and each part of the page is shown alone
-inside the arch, fading out before the next one fades in. It starts with the
-curtains swaying and opening (no tap hint) onto the first page; for the
-closing the grass, cloth and leaves rise in at the bottom; it ends on a QR
-scene built from `qr/qr-code.svg`, the names in `config.js` and the address
-in the page's canonical link. The countdown and the map are left out.
+How it works: the page opens in "video mode" and plays like a classic
+animated invitation, in four parts:
 
-The scenes are chosen in `index.html` with these attributes (they have no
-effect on the website itself):
+1. **Cover** — on plain paper the flowers bleed in from the top corners like
+   watercolour, the curtains slide in, the chandelier lowers and swings to
+   rest, the pillars draw down; then the verse, the opening words, the names
+   and the date appear one line at a time, and the page holds.
+2. **Change** — the text fades, the chandelier lifts away, the curtains slide
+   out; the pillars run the full height and the grass and cloth bleed in.
+3. **Details** — the host families, the invitation, the couple, then the date,
+   time and venue (each with its icon) and the closing words, line by line.
+4. **QR** — the names and the QR code from `qr/qr-code.svg`, with the address
+   from the page's canonical link.
 
-| Attribute | Meaning |
-|---|---|
-| `data-video-scene="name"` | Show this element alone as one scene. Scenes play in page order. |
-| `data-video-hold="4000"` | How long the scene stays on screen, in milliseconds (default 4000). |
-| `data-video-hide` | Hide this element in the video (the buttons, the map, the tap hint, the scroll cue). |
-
-So to drop a part from the video, remove its `data-video-scene`; to add a new
-section, give it one. The curtain, fade, ground and QR timings are at the top
-of `video/storyboard.js`. A scene that is too tall for its space in the arch
-is shrunk to fit.
+All the text comes from the page itself (so from `config.js`); nothing in
+`index.html` needs changing. The timings are at the top of
+`video/storyboard.js`. The cover's decoration pieces are in `video/layers/`
+(made by `design/build_from_canva.py` along with the site's art). The details
+page shrinks to fit if the text gets longer. The countdown and the map are
+left out.
 
 Rendering takes about 3 minutes: the page clock is advanced one frame at a
 time and each frame is a full-resolution screenshot, so the result is smooth

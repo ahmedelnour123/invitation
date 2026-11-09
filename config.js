@@ -70,7 +70,7 @@ window.WEDDING = {
   invitationLine: "بدعوتكم لحضور حفل زفاف نجليهما وتناول طعام العشاء",  // full line below the card
 
   notes: [
-    "وسيُعْقَدُ الْقِرَانُ بِمَشِيئَةِ اللهِ فِي تَمَامِ السَّاعَةِ الثَّامِنَةِ مَسَاءً، فِي ذَاتِ الْقَاعَةِ الَّتِي تُشَرَّفُ بِحُضُورِكُم",
+    "سيُعْقَدُ الْقِرَانُ بِمَشِيئَةِ اللهِ فِي تَمَامِ السَّاعَةِ الثَّامِنَةِ مَسَاءً، فِي ذَاتِ الْقَاعَةِ الَّتِي تَزدَانُ بِحُضُورِكُم",
     // "يُعقَد القِران في تمام الساعة الثامنة مساءً في القاعة نفسها"
   ],
 
@@ -79,8 +79,9 @@ window.WEDDING = {
   afterEvent: "تمّ الزفاف بحمد الله — بارك الله لهما وبارك عليهما وجمع بينهما في خير",
 
   /* ---------- الموسيقى | Background music ---------- */
-  // Starts when the guest taps to open the curtains, loops, and can be paused
-  // with the round button in the corner.
+  // Only on the link that ends in ?m (e.g. https://khidir-amal.ahmedelnour.com/?m):
+  // it starts when the guest taps to open the curtains, loops, and can be paused
+  // with the round button in the corner. The plain link has no music and no button.
   // src: the path WITHOUT extension of the files made by Tools/make-audio.mjs
   //      (it makes NAME.webm and NAME.m4a; each phone loads only the one it plays),
   //      or a single file WITH its extension, e.g. "assets/audio/song.mp3".

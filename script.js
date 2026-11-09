@@ -258,7 +258,10 @@
     var cfg = W.music || {};
     var btn = document.getElementById("musicToggle");
     var noop = { start: function () {} };
-    if (!cfg.src || !btn) return noop;
+    // only the link with ?m plays music (…/?m or …/index.html?m); the plain link
+    // is silent, shows no button and downloads no audio
+    var withMusic = /[?&]m(=[^&]*)?(&|$)/.test(window.location.search);
+    if (!cfg.src || !btn || !withMusic) return noop;
 
     var audio = document.createElement("audio");
     audio.loop = true;

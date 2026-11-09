@@ -16,6 +16,7 @@ in Canva's units). Run this again if the layers or positions change.
   assets/waw.webp        the pink «و» between the names
   assets/flourish.svg    the copper scroll line (vector), coloured as in Canva
   assets/icon-*.svg      calendar / pin / clock icons (vector), coloured
+  Tools/video/layers/    the first page's art in separate pieces, for the video
 
 usage:  Tools/.venv/Scripts/python Tools/design/build_from_canva.py
 Needs: pillow (see Tools/requirements.txt).
@@ -133,8 +134,43 @@ def pillar_strip(card, spec):
     return Image.fromarray(tile, "RGBA")
 
 
+VIDEO_OUT = ROOT / "Tools" / "video" / "layers"
+
+
+def video_layers():
+    """The first page's art split back into its pieces, for the video's opening
+    (Tools/video/storyboard.js animates each one in). Stacked in this order they
+    make exactly assets/top.webp:
+      flowers.webp     background + top wash (flowers, greenery, pillar tops)
+      curtain-r/l.webp, chandelier.webp   cut to their own boxes
+      texture.webp     the faint paper grain over everything
+    layers.json gives each piece's box in Canva units (1080 across)."""
+    import json
+    VIDEO_OUT.mkdir(parents=True, exist_ok=True)
+    top_h = px(TOP_END)
+    fade = lambda im: fade_rows(im.crop((0, 0, px(PAGE_W), top_h)), px(TOP_END - TOP_FADE), px(TOP_FADE), fade_in=False)
+    boxes = {}
+
+    flowers = layer("background.png", BACKGROUND)
+    flowers.alpha_composite(layer("top-wash.png", TOP_WASH))
+    fade(flowers).save(VIDEO_OUT / "flowers.webp", quality=86, method=6)
+    boxes["flowers"] = [0, 0, PAGE_W, TOP_END]
+    fade(layer("texture.png", TEXTURE)).save(VIDEO_OUT / "texture.webp", quality=80, method=6)
+    boxes["texture"] = [0, 0, PAGE_W, TOP_END]
+
+    for key, name, spec in [("curtain-r", "curtain.png", CURTAIN_R), ("curtain-l", "curtain.png", CURTAIN_L),
+                            ("chandelier", "chandelier.png", CHANDELIER)]:
+        bx, by, bw, bh = spec["box"]
+        layer(name, spec, canvas_size=(bw, bh), origin=(bx, by)).save(VIDEO_OUT / f"{key}.webp", quality=88, method=6)
+        boxes[key] = [round(v, 3) for v in (bx, by, bw, bh)]
+
+    (VIDEO_OUT / "layers.json").write_text(json.dumps(boxes, indent=2), encoding="utf-8")
+    print("video layers:", ", ".join(sorted(p.name for p in VIDEO_OUT.iterdir())))
+
+
 def main():
     OUT.mkdir(exist_ok=True)
+    video_layers()
 
     # the card art (everything that never moves and sits under the text)
     card = Image.new("RGBA", (px(PAGE_W), px(PAGE_H)), (255, 255, 255, 255))
