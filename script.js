@@ -136,6 +136,18 @@
     setField("timeLong", W.timeLine || "");
   }
 
+  /* ---------- first page: the text block starts right under the verse ---------- */
+  function placeFirstPage() {
+    var card = document.querySelector(".card");
+    var verse = card && card.querySelector(".card__verse");
+    if (!verse) return;
+    var gap = verse.getBoundingClientRect().bottom - card.getBoundingClientRect().top;
+    card.style.setProperty("--content-top", Math.round(gap) + "px");
+  }
+  placeFirstPage();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeFirstPage);
+  window.addEventListener("resize", placeFirstPage);
+
   /* ---------- map ---------- */
   var mapBtn = document.getElementById("mapBtn");
   if (W.venue.mapUrl) mapBtn.href = W.venue.mapUrl; else mapBtn.hidden = true;

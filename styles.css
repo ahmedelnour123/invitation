@@ -167,7 +167,9 @@ a { color: inherit; }
   z-index: 2;
   left: 0;
   right: 0;
-  top: calc(960 * var(--u));            /* under the side flowers */
+  /* starts right under the verse (measured by script.js), so the spaces
+     verse → opening words → names → date are all equal */
+  top: var(--content-top, calc(960 * var(--u)));
   bottom: calc(70 * var(--u));          /* room for the scroll cue */
   display: flex;
   flex-direction: column;
