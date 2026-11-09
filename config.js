@@ -22,39 +22,41 @@ window.WEDDING = {
   // father / mother = the parents' full names
   families: [
     { // أهل العريس
-      father: "صديق خضر علي حمد",
-      mother: "حرم محمد أبوعشي ميدم"
+      father: "آل خضر علي",
+      mother: "آل محمد أبوعشي"
     },
     { // أهل العروس
-      father: "جمعة حمدالسيد محمد جماعة",
-      mother: "فطيمة علي محمد جماعة"
+      father: "آل حمدالسيد محمد",
+      mother: "آل علي محمد"
     }
   ],
 
   /* ---------- الموعد | Date & time ---------- */
   // ISO format with Saudi offset (+03:00). The weekday, dates, Hijri date,
   // countdown and calendar links are all generated from this one value.
-  eventStart: "2026-12-11T21:00:00+03:00",   // الجمعة 11.12.2026 — 9:00 PM
+  eventStart: "2026-12-11T20:00:00+03:00",   // الجمعة 11.12.2026 — 8:00 PM (عقد القران)
   durationHours: 4,
   // Optional: if the auto-calculated Hijri date is off by a day, write
   // the correct one here, e.g. "1 رجب 1448 هـ". Leave "" for automatic.
   hijriOverride: "",
-  timeLabel: "الاستقبال",                     // «الاستقبال الساعة 9:00 مساءً»
+  timeLine: "يُقدَّم العشاء في تمام الساعة العاشرة مساءً",   // under the date, in the date section
 
   /* ---------- المكان | Venue ---------- */
-  // Empty fields are hidden; the map button appears once mapUrl is filled in.
+  // Empty fields are hidden; the map button and map box appear when mapUrl / mapEmbed are set.
   venue: {
-    name: "قاعة الأفراح",
+    name: "قاعة سمر للمناسبات",
     description: "",
-    city: "",
-    address: "",
-    mapUrl: ""          // e.g. "https://maps.app.goo.gl/…"
+    city: "جدة",
+    address: "حي الروابي، شارع عبدالملك الحربي",
+    mapUrl: "https://maps.app.goo.gl/gh9WxNBmrcRrCzmE7",
+    // the map shown in the venue box (a place search; no API key needed)
+    mapEmbed: "https://maps.google.com/maps?q=Samar%20Hall%2C%209038%20Abdulmalik%20Al%20Harbi%2C%20Al%20Rawabi%2C%20Jeddah%2022348&hl=ar&z=15&output=embed"
   },
 
   /* ---------- النصوص | Text ---------- */
   // \n = new line. The «ـــ» stretches are part of the design.
-  // The verse is written as in the design, with its brackets; \n is where the card breaks the line.
-  verse: "﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنفُسِكُمْ أَزْوَاجًا لِتَسْكُنُوا إِلَيْهَا\nوَجَعَلَ بَيْنَكُمْ مَوَدَّةً وَرَحْمَةً ﴾",
+  // The verse as in the design, with its brackets; each \n starts a new line on the first page.
+  verse: "﴿وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ\nمِنْ أَنفُسِكُمْ أَزْوَاجًا\nلِتَسْكُنُوا إِلَيْهَا\nوَجَعَلَ بَيْنَكُمْ مَوَدَّةً وَرَحْمَةً ﴾",
   verseRef: "سورة الروم: الآية ٢١",
 
   intro: [
@@ -69,8 +71,7 @@ window.WEDDING = {
   invitationLine: "بدعوتكم لحضور حفل زفاف نجليهما وتناول طعام العشاء",  // full line below the card
 
   notes: [
-    "[ملاحظة ١ — مثال: الحفل للبالغين فقط]",
-    "[ملاحظة ٢ — مثال: يُرجى إبراز الدعوة عند الدخول]"
+    "يُعقَد القِران في تمام الساعة الثامنة مساءً في القاعة نفسها"
   ],
 
   closing: "حبابكم عشرة",               // Sudanese welcome

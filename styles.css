@@ -74,31 +74,39 @@ a { color: inherit; }
   margin: 0 auto;
   background: var(--paper);
 }
-/* the pillars run down both sides of the whole page, from under the first
-   page's pillar tops to the last page's pillar bases (the art pieces on top
-   of them fade into these strips) */
-.page::before,
-.page::after {
+/* the pillars stand on the first page (under the pillar tops of the art,
+   fading out at the page's foot) and on the last page (fading in, down to
+   the pillar bases of the ground art) */
+.card::before, .card::after,
+.closing::before, .closing::after {
   content: "";
   position: absolute;
-  top: calc(1040 * var(--cu));
   bottom: 0;
   z-index: 0;
   pointer-events: none;
   background-repeat: repeat-y;
   background-position: 0 0;
+  background-size: 100% auto;
 }
-.page::before {
+.card::before, .closing::before {
   left: 0;
   width: calc(150 * var(--cu));
   background-image: url("assets/pillar-left.webp");
-  background-size: 100% auto;
 }
-.page::after {
+.card::after, .closing::after {
   left: calc(968 * var(--cu));
   width: calc(112 * var(--cu));
   background-image: url("assets/pillar-right.webp");
-  background-size: 100% auto;
+}
+.card::before, .card::after {
+  top: calc(1040 * var(--cu));
+  -webkit-mask-image: linear-gradient(to bottom, #000 75%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 75%, transparent 100%);
+}
+.closing::before, .closing::after {
+  top: 0;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 160px);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 160px);
 }
 .card, .more { position: relative; z-index: 1; }
 /* big screens: no hard edge between the column and the background —
@@ -129,41 +137,103 @@ a { color: inherit; }
 
 /* ============================================================
    First page
-   The top of the Canva design, with the verse and opening words
-   centred on the screen. The text keeps its Canva boxes (--l left,
-   --t top within the block, --w width, --h height), font size (--fs)
-   and line height (--lh), in units of the 1080-wide Canva page;
-   --u is one Canva unit at the current width.
+   The top of the Canva design, then (in the space under the side
+   flowers) the verse and opening words, the couple's names between
+   the two flourishes, the date, and a cue to scroll.
+   Text keeps its Canva boxes (--l left, --t top within its block,
+   --w width, --h height), font size (--fs) and line height (--lh),
+   in units of the 1080-wide Canva page; each block is enlarged --k
+   times around the Canva centre line (553).
    ============================================================ */
 .card {
   --u: calc(100cqw / 1080);
   width: 100%;
-  height: max(100svh, calc(var(--col) * 1.45));
+  height: max(100svh, calc(var(--col) * 1.9));
   container-type: inline-size;
   overflow: hidden;
 }
 .card__art {
   position: absolute;
+  z-index: 1;
   top: 0;
   left: 0;
   width: 100%;
   height: auto;
 }
-/* verse + intro as one block, centred in the first page and enlarged --k times
-   (the Canva layout scaled up; 553 = the block's centre line in Canva units) */
 .card__content {
-  --k: 1.5;
-  --u: calc(100cqw / 1080 * var(--k));
   position: absolute;
   z-index: 2;
   left: 0;
   right: 0;
-  /* centred, but never higher than just under the side flowers (y 1010 in Canva units) */
-  top: max(50%, calc((1010 + 156.22 * var(--k)) * 100cqw / 1080));
-  height: calc(312.44 * var(--u));
-  translate: 0 -50%;
+  top: calc(960 * var(--u));            /* under the side flowers */
+  bottom: calc(70 * var(--u));          /* room for the scroll cue */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
+.card__lead, .card__names {
+  position: relative;
+  flex: none;
+  margin: 0;
+  --u: calc(100cqw / 1080 * var(--k));
+}
+.card__lead  { --k: 1.5;  height: calc(207.3 * var(--u)); }
+.card__names { --k: 1.15; height: calc(266.36 * var(--u)); font: inherit; }
 .card .card__content .t { left: calc(50% + (var(--l) - 553) * var(--u)); }
+.t-name { font-family: var(--font-script); color: var(--copper); }
+
+/* the verse: large, centred in the sky between the chandelier and the flowers */
+.card__verse {
+  position: absolute;
+  z-index: 2;
+  left: calc(170 * var(--u));
+  right: calc(170 * var(--u));
+  top: calc(660 * var(--u));
+  translate: 0 -50%;
+  text-align: center;
+  color: var(--verse);
+  font-family: var(--font-quran);
+  font-weight: 700;
+}
+.card__verse-text {
+  margin: 0;
+  white-space: pre;
+  font-size: calc(54 * var(--u));
+  line-height: 1.3;
+}
+.card__verse-ref {
+  margin: calc(10 * var(--u)) 0 0;
+  font-size: calc(26 * var(--u));
+}
+.t-flip { rotate: 180deg; }
+.card__date {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: .9em;
+  font-family: var(--font-body);
+  font-size: calc(34 * var(--u));
+  color: var(--red);
+}
+.card__date .num { letter-spacing: .3em; margin-inline-end: -.3em; }
+
+/* scroll cue at the foot of the first page */
+.scroll-cue {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: calc(40 * var(--u));
+  translate: -50% 0;
+  width: calc(64 * var(--u));
+  min-width: 28px;
+  color: var(--copper);
+  -webkit-tap-highlight-color: transparent;
+}
+.scroll-cue svg { display: block; width: 100%; height: auto; animation: cue 2.2s ease-in-out infinite; }
+@keyframes cue {
+  0%, 100% { transform: translateY(0); opacity: .55; }
+  50%      { transform: translateY(35%); opacity: 1; }
+}
 
 .card .t {
   position: absolute;
@@ -182,8 +252,6 @@ a { color: inherit; }
   line-height: calc(var(--lh, var(--h)) * var(--u));
 }
 
-.t-verse { font-family: var(--font-quran); font-weight: 700; color: var(--verse); }
-.card .t-verse { white-space: pre; }            /* keeps the verse's line break */
 /* Canva writes «الله» with plain letters, not Almarai's decorative ligature */
 .card .t { font-variant-ligatures: no-common-ligatures; }
 .t-intro { flex-direction: column; font-family: var(--font-body); color: var(--body); }
@@ -201,8 +269,7 @@ a { color: inherit; }
    Below the card
    ============================================================ */
 .more {
-  /* keeps the text clear of the pillars on both sides */
-  --pad: max(44px, calc(140 * var(--cu)));
+  --pad: 24px;
   padding: 8px var(--pad) 0;
   text-align: center;
 }
@@ -289,6 +356,20 @@ a { color: inherit; }
 .info__meta:empty { display: none; }
 .num { direction: ltr; unicode-bidi: isolate; }
 
+/* location box */
+.map {
+  margin: 18px auto 0;
+  max-width: 420px;
+  aspect-ratio: 4 / 3;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(168, 115, 127, .35);
+  box-shadow: 0 10px 28px rgba(110, 125, 135, .16);
+  background: #eef1ee;
+}
+.map iframe { display: block; width: 100%; height: 100%; border: 0; }
+.map[hidden] { display: none; }
+
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -353,6 +434,7 @@ a { color: inherit; }
 
 /* notes */
 .notes__list {
+  text-wrap: balance;
   list-style: none;
   padding: 0;
   margin-top: 12px;
@@ -375,11 +457,18 @@ a { color: inherit; }
 }
 
 /* closing: the last page ends with the bottom of the Canva design */
-.closing { padding-bottom: 0; }
-.ground {
+.closing {
+  --ppad: max(44px, calc(140 * var(--cu)));   /* keeps the text clear of the pillars */
+  position: relative;
+  margin-inline: calc(-1 * var(--pad));
+  padding-inline: var(--ppad);
+  padding-bottom: 0;
+}
+.closing > * { position: relative; z-index: 1; }
+.closing > .ground {
   position: relative;
   /* full column width (undo .more's side padding), tucked slightly under the text above */
-  margin: calc(-40 * var(--cu)) calc(-1 * var(--pad)) 0;
+  margin: calc(-40 * var(--cu)) calc(-1 * var(--ppad)) 0;
   aspect-ratio: 1080 / 770;
   pointer-events: none;
 }
@@ -400,6 +489,7 @@ a { color: inherit; }
   opacity: .82;
 }
 .closing__big {
+  padding-top: .8em;             /* room for Gulzar's tall ك under the flourish */
   font-family: var(--font-script);
   font-weight: 700;
   font-size: 2.9rem;
@@ -553,4 +643,5 @@ a { color: inherit; }
   .intro.is-playing .curtain--left { animation: none; opacity: 0; }
   .intro__hint { animation: none; }
   .js .card .c, .js .reveal { transition: none; filter: none; transform: none; }
+  .scroll-cue svg { animation: none; }
 }

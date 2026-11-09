@@ -76,25 +76,42 @@
   <main class="page">
 
     <!-- First page: the top of the Canva design (chandelier, flowers, curtains,
-         the pillars' top halves) with the verse and opening words centred.
-         The text keeps its Canva sizes and spacing (units of the 1080-wide
-         Canva page — see styles.css). --i = fade-in order after the curtains open.
-         The pillars then run down both sides of the page (.page::before/::after)
-         and the grass, cloth and leaves close the last page (.ground). -->
+         the pillars' top halves) with the verse in the arch, then the opening words, the names
+         between the two flourishes, the date and a scroll cue. Text keeps its
+         Canva sizes and spacing (units of the 1080-wide Canva page, see
+         styles.css). --i = fade-in order after the curtains open.
+         The pillars stand on this page and on the last one (.card / .closing
+         ::before/::after); the last page ends with the grass and cloth (.ground). -->
     <header class="card" data-video-scene="card" data-video-hold="7000">
       <img class="card__art" src="assets/top.webp" alt="" width="1440" height="1547" fetchpriority="high">
-      <div class="card__content">
-        <p class="t c t-verse" style="--l:290.87;--t:0;--w:524.25;--h:61.42;--fs:24.72;--lh:30.71;--i:0" data-field="verse"></p>
-        <p class="t c t-verse" style="--l:295.27;--t:45.4;--w:121.34;--h:16.03;--fs:14.03;--lh:16.03;--i:0" data-field="verseRef"></p>
-        <div class="t c t-intro" style="--l:210.55;--t:105.14;--w:690.77;--h:207.3;--fs:30.79;--lh:41.46;--i:1" data-field="intro"></div>
+      <!-- the verse, large, in the open sky under the chandelier -->
+      <div class="card__verse c" style="--i:0">
+        <p class="card__verse-text" data-field="verse"></p>
+        <p class="card__verse-ref" data-field="verseRef"></p>
       </div>
+      <div class="card__content">
+        <div class="card__lead">
+          <div class="t c t-intro" style="--l:210.55;--t:0;--w:690.77;--h:207.3;--fs:30.79;--lh:41.46;--i:1" data-field="intro"></div>
+        </div>
+        <h1 class="card__names">
+          <img class="t c" style="--l:379.25;--t:0;--w:355.2;--h:26.64;--i:2" src="assets/flourish.svg" alt="" width="1890" height="139">
+          <span class="t c t-name" style="--l:614.47;--t:76.05;--w:253.09;--h:163.66;--fs:136.71;--lh:163.66;--i:3" data-field="groomName"></span>
+          <img class="t c" style="--l:460.29;--t:69.29;--w:170.63;--h:154.18;--i:4" src="assets/waw.webp" alt="و" width="512" height="463">
+          <span class="t c t-name" style="--l:238.42;--t:76.05;--w:236.64;--h:153.02;--fs:127.82;--lh:153.02;--i:4" data-field="brideName"></span>
+          <img class="t c t-flip" style="--l:379.25;--t:239.71;--w:355.2;--h:26.64;--i:5" src="assets/flourish.svg" alt="" width="1890" height="139">
+        </h1>
+        <p class="card__date c" style="--i:6"><span data-field="weekday"></span><span class="num" data-field="dateShort"></span></p>
+      </div>
+      <a class="scroll-cue c" style="--i:7" href="#hosts" aria-label="تابع القراءة">
+        <svg viewBox="0 0 48 30" aria-hidden="true"><path d="M4 4l20 20L44 4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
     </header>
 
     <!-- ===== Below the card ===== -->
     <div class="more">
 
       <!-- Host families (full names) -->
-      <section class="section hosts" data-video-scene="families" data-video-hold="5500">
+      <section class="section hosts" id="hosts" data-video-scene="families" data-video-hold="5500">
         <p class="s-label reveal" data-field="hostsLabel"></p>
         <ul class="hosts__list reveal" data-field="families"></ul>
         <p class="hosts__line reveal" data-field="invitationLine"></p>
@@ -127,6 +144,9 @@
         <p class="info__main reveal" data-field="venueName"></p>
         <p class="info__meta reveal" data-field="venueDescription"></p>
         <p class="info__meta reveal" data-field="venuePlace"></p>
+        <div class="map reveal" id="mapBox">
+          <iframe title="موقع القاعة على الخريطة" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        </div>
         <div class="actions reveal" data-video-hide>
           <a class="btn" id="mapBtn" href="#" target="_blank" rel="noopener">عرض الموقع على الخريطة</a>
         </div>

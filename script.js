@@ -122,15 +122,18 @@
     var h = parseInt(p.hour, 10);
     var h12 = h % 12 === 0 ? 12 : h % 12;
 
+    setField("weekday", weekday);
     setField("dateShort", p.day + "." + p.month + "." + p.year);           // 11.12.2026
     setField("weekdayDate", weekday + "، " + dateLong);
     setField("dateHijri", hijri);
-    setField("timeLong", (W.timeLabel || "الاستقبال") + " الساعة " + h12 + ":" + p.minute + " " + (h < 12 ? "صباحًا" : "مساءً"));
+    setField("timeLong", W.timeLine || "");
   }
 
   /* ---------- map ---------- */
   var mapBtn = document.getElementById("mapBtn");
   if (W.venue.mapUrl) mapBtn.href = W.venue.mapUrl; else mapBtn.hidden = true;
+  var mapBox = document.getElementById("mapBox");
+  if (W.venue.mapEmbed) mapBox.querySelector("iframe").src = W.venue.mapEmbed; else mapBox.hidden = true;
 
   /* ---------- calendar ---------- */
   var eventTitle = "حفل زفاف " + groomShort + " و" + brideShort;
