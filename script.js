@@ -241,6 +241,71 @@
     document.querySelector(".countdown").hidden = true;
   }
 
+  /* ---------- background music ---------- */
+  var music = (function () {
+    var cfg = W.music || {};
+    var btn = document.getElementById("musicToggle");
+    var noop = { start: function () {} };
+    if (!cfg.src || !btn) return noop;
+
+    var audio = document.createElement("audio");
+    audio.loop = true;
+    audio.preload = "auto";
+    if (/\.[a-z0-9]{2,4}$/i.test(cfg.src)) {
+      audio.src = cfg.src;                                  // one file, as given
+    } else {
+      [["webm", "audio/webm; codecs=opus"], ["m4a", "audio/mp4"]].forEach(function (f) {
+        var s = document.createElement("source");
+        s.src = cfg.src + "." + f[0];
+        s.type = f[1];
+        audio.appendChild(s);
+      });
+    }
+    document.body.appendChild(audio);
+
+    var target = Math.max(0, Math.min(1, cfg.volume == null ? 0.8 : Number(cfg.volume)));
+    var wanted = true;                                      // the guest hasn't paused it
+    var fadeTimer;
+
+    function fadeIn() {                                     // gentle start (where the browser allows volume)
+      clearInterval(fadeTimer);
+      audio.volume = 0;
+      fadeTimer = setInterval(function () {
+        audio.volume = Math.min(target, audio.volume + target / 20);
+        if (audio.volume >= target) clearInterval(fadeTimer);
+      }, 100);
+    }
+    function play() {
+      var p = audio.play();
+      fadeIn();
+      if (p && p.catch) p.catch(function () { setState(false); });
+    }
+    function setState(on) {
+      wanted = on;
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+      btn.setAttribute("aria-label", on ? "إيقاف الموسيقى" : "تشغيل الموسيقى");
+      btn.classList.toggle("is-off", !on);
+    }
+
+    btn.addEventListener("click", function () {
+      if (audio.paused) { setState(true); play(); } else { setState(false); audio.pause(); }
+    });
+    // pause while the page is in the background; resume when the guest comes back
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) audio.pause();
+      else if (wanted && opened) play();
+    });
+    audio.addEventListener("error", function () { btn.hidden = true; }, true);
+
+    return {
+      start: function () {
+        btn.hidden = false;
+        setState(true);
+        play();
+      }
+    };
+  })();
+
   /* ---------- opening: the curtains draw open ---------- */
   var intro = document.getElementById("intro");
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -251,6 +316,7 @@
   function openInvite() {
     if (opened) return;
     opened = true;
+    music.start();                       // the tap that opens the curtains also allows sound
     if (!intro) { showCard(); document.body.classList.remove("is-locked"); startReveal(); return; }
     var duration = reduced ? 400 : (parseInt(intro.getAttribute("data-duration"), 10) || 1900);
     intro.classList.add("is-playing");

@@ -198,6 +198,12 @@
     </div>
   </main>
 
+  <!-- background music on/off (shown once the invitation is opened; see config.js → music) -->
+  <button class="music-toggle" id="musicToggle" type="button" aria-pressed="true" aria-label="إيقاف الموسيقى" hidden data-video-hide>
+    <svg class="music-toggle__on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <svg class="music-toggle__off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M15.5 9.5l5 5M20.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  </button>
+
   <script src="config.js"></script>
   <script src="script.js"></script>
 </body>

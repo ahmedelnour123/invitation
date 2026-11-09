@@ -70,10 +70,25 @@ window.WEDDING = {
   invitationLine: "بدعوتكم لحضور حفل زفاف نجليهما وتناول طعام العشاء",  // full line below the card
 
   notes: [
-    "يُعقَد القِران في تمام الساعة الثامنة مساءً في القاعة نفسها"
+    "وسيُعْقَدُ الْقِرَانُ بِمَشِيئَةِ اللهِ فِي تَمَامِ السَّاعَةِ الثَّامِنَةِ مَسَاءً، فِي ذَاتِ الْقَاعَةِ الَّتِي تُشَرَّفُ بِحُضُورِكُم",
+    // "يُعقَد القِران في تمام الساعة الثامنة مساءً في القاعة نفسها"
   ],
 
   closing: "حبابكم عشرة",               // Sudanese welcome
   closingSub: "وبحضوركم تكتمل فرحتنا",
-  afterEvent: "تمّ الزفاف بحمد الله — بارك الله لهما وبارك عليهما وجمع بينهما في خير"
+  afterEvent: "تمّ الزفاف بحمد الله — بارك الله لهما وبارك عليهما وجمع بينهما في خير",
+
+  /* ---------- الموسيقى | Background music ---------- */
+  // Starts when the guest taps to open the curtains, loops, and can be paused
+  // with the round button in the corner.
+  // src: the path WITHOUT extension of the files made by Tools/make-audio.mjs
+  //      (it makes NAME.webm and NAME.m4a; each phone loads only the one it plays),
+  //      or a single file WITH its extension, e.g. "assets/audio/song.mp3".
+  //      Leave src "" for no music.
+  // volume: 0–1 (iPhones ignore it and play at the phone's own volume — the tool
+  //      already makes the file gentle).
+  music: {
+    src: "assets/audio/music",
+    volume: 0.8
+  }
 };
