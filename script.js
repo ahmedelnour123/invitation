@@ -61,6 +61,13 @@
   setField("verse", W.verse);
   setField("verseRef", W.verseRef);
   setList("intro", W.intro, "p");
+  // the first page's opening words: size their box to the number of lines
+  var introLines = (W.intro || []).length || 1;
+  document.querySelectorAll(".card__lead").forEach(function (lead) {
+    lead.style.setProperty("--lines", introLines);
+    var box = lead.querySelector(".t-intro");
+    if (box) box.style.setProperty("--h", (41.46 * introLines).toFixed(2));
+  });
   setField("hostsLabel", W.hostsLabel || "يتشـــرف");
 
   // families: the parents' full names

@@ -54,6 +54,7 @@ html.video-mode,
   bottom: 0;
   z-index: 2;
   margin: 0;
+  aspect-ratio: 1080 / 770;
   opacity: 0;
 }
 
@@ -64,6 +65,8 @@ html.video-mode,
   z-index: 3;
   padding: 0;
 }
+/* parts of the page that are not scenes (e.g. the countdown) stay out of the video */
+.video-mode .more > :not([data-video-scene]) { display: none !important; }
 .video-mode .more [data-video-scene] {
   --mid: 1120;                       /* centre line of the scene (Canva units) */
   position: absolute !important;

@@ -179,7 +179,7 @@ a { color: inherit; }
   margin: 0;
   --u: calc(100cqw / 1080 * var(--k));
 }
-.card__lead  { --k: 1.5;  height: calc(207.3 * var(--u)); }
+.card__lead  { --k: 1.5;  height: calc(41.46 * var(--lines, 5) * var(--u)); }   /* --lines set by script.js */
 .card__names { --k: 1.15; height: calc(266.36 * var(--u)); font: inherit; }
 .card .card__content .t { left: calc(50% + (var(--l) - 553) * var(--u)); }
 .t-name { font-family: var(--font-script); color: var(--copper); }
