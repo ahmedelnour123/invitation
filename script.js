@@ -106,11 +106,6 @@
   setField("venueDescription", W.venue.description || "");
   setField("venuePlace", [W.venue.city, W.venue.address].filter(Boolean).join(" — "));
 
-  if (W.notes && W.notes.length) {
-    setList("notes", W.notes, "li");
-  } else {
-    document.getElementById("notesSection").hidden = true;
-  }
 
   setField("closing", W.closing);
   setField("closingSub", W.closingSub);

@@ -436,30 +436,6 @@ a { color: inherit; }
   color: var(--rose);
 }
 
-/* notes */
-.notes__list {
-  text-wrap: balance;
-  list-style: none;
-  padding: 0;
-  margin-top: 12px;
-  display: grid;
-  gap: 10px;
-  font-family: var(--font-body);
-  font-size: 1.12rem;
-  color: var(--body);
-}
-.notes__list li::before {
-  content: "";
-  display: block;
-  width: 7px;
-  height: 7px;
-  margin: 0 auto 6px;
-  border-radius: 50% 0;
-  background: var(--accent);
-  opacity: .7;
-  transform: rotate(45deg);
-}
-
 /* closing: the last page ends with the bottom of the Canva design */
 .closing {
   --ppad: max(44px, calc(140 * var(--cu)));   /* keeps the text clear of the pillars */

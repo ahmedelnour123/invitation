@@ -252,7 +252,6 @@ window.__video = (() => {
     const line = $("#hosts .hosts__line");
     const groom = text('#hosts [data-field="groomFullName"]');
     const bride = text('#hosts [data-field="brideFullName"]');
-    const notes = $$("#notesSection li").map((li) => li.textContent.trim()).filter(Boolean);
 
     const pages = [];
     let col;
@@ -293,7 +292,7 @@ window.__video = (() => {
       metas.forEach((m) => { t.appendChild(el("p", "vd__meta")).textContent = m; });
     };
     row("assets/icon-calendar.svg", text('[data-field="weekdayDate"]'), [text('[data-field="dateHijri"]')]);
-    row("assets/icon-clock.svg", "", [...notes, text('[data-field="timeLong"]')]);
+    row("assets/icon-clock.svg", "", [text('[data-field="timeLong"]')]);
     row("assets/icon-pin.svg", text('[data-field="venueName"]'), [text('[data-field="venuePlace"]')]);
 
     if (text('.closing [data-field="closing"]')) add(el("p", "vd__closing")).textContent = text('.closing [data-field="closing"]');

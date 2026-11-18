@@ -5,7 +5,7 @@
   {"wait": 2600, "shot": "3-card"},
   {"eval": "document.querySelector('.hosts').scrollIntoView()", "wait": 1300, "shot": "4-families"},
   {"eval": "document.querySelector('#when').scrollIntoView()", "wait": 1300, "shot": "5-date-venue"},
-  {"eval": "document.querySelector('#countdown-section').scrollIntoView()", "wait": 1300, "shot": "6-countdown-notes"},
+  {"eval": "document.querySelector('#countdown-section').scrollIntoView()", "wait": 1300, "shot": "6-countdown"},
   {"eval": "window.scrollTo(0, document.body.scrollHeight)", "wait": 1500, "shot": "7-closing"},
   {"viewport": [1440, 900]},
   {"eval": "window.scrollTo(0, 0)", "wait": 1200, "shot": "8-desktop"}
